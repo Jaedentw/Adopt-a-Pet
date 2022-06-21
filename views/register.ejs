@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Home Page</title>
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/nav.css" type="text/css">0
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
+
+</head>
+
+
+<body>
+  <%- include('./nav.ejs'); %>
+
+  <main style="margin: 1em;">
+    <form method="POST" action="/register">
+      <label for="fname">email:</label><br>
+       <input type="email" id="email" name="email"><br>
+       <label for="fname">username:</label><br>
+       <input type="username" id="username" name="username"><br>
+      <label for="lname">Password:</label><br>
+      <input type="password" id="password" name="password">
+      <button type="submit">Register</button>
+    </form>
+  </main>
+
+  <h1>Have fun!!!! 🥔</h1>
+</body>
+
+</html>
