@@ -58,7 +58,7 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
-// get request for home page
+
 
 
 const users = {
@@ -148,7 +148,6 @@ app.post("/register", (req, res) => {
 
   if (!req.body.email || !req.body.password || !req.body.username) {
     res.status(400).send("Error, Please enter all fields requierd");
-
   } else if (checkUserEmail(req.body.username,req.body.email)) {
 
     res.status(400).send("Email or username already registered");
