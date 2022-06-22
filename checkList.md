@@ -73,5 +73,14 @@
 [] saved items page
 [] sales post page
 
+### DATABASE
+[] Search Queries - Fetch your posts --> All pets you have up for adoption
+                  - Get featured posts --> Featured
+                  - Get specific user --> User and all their pets up for adoption
+                  - get all favourites --> Saved pets
+                  - user by email
+                  - Filter items by **price**, (location, breed, color, type,) --> price required
+                  - records of sold pets --> all pets marked as sold
+                  
 
 
