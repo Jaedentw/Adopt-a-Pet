@@ -60,7 +60,17 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Separate them into separate routes files (see above).
 
 
-database.getUserWithEmail('bobS@hotmail.com')
+
+
+const user = {
+  name: 'Kosta',
+  lastname: 'vlahakis',
+  username: 'Kostakv',
+  email: 'kosta@gmail.ca',
+  password: 'password',
+  phone_number: '647-647-6477'
+}
+
 
 const users = {
   "userRandomID": {
@@ -76,7 +86,18 @@ const users = {
     password: "password123"
   },
 }
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// TESTING QUERIES -----------------------------
+console.log('getting userwith email: ')
+database.getUserWithEmail('bobS@hotmail.com');
+console.log('get user with ID:')
+database.getUserWihId(7);
+const myTimeout = setTimeout(database.getAllUsers, 1000);
 
+
+
+// ---------------------------------------------
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 const checkUsername = function(username, password){
