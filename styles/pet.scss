@@ -10,7 +10,7 @@
 
 .details-bar {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   background-color: #333;
   color:white;
   width: 100%;
@@ -59,8 +59,7 @@
   color: red;
 }
 
-.desc {
-  width: 50%;
+.space-between {
   justify-content: space-between;
 }
 
