@@ -1,5 +1,6 @@
 // load .env data into process.env
 require("dotenv").config();
+const database = require('./database');
 
 // Web server config
 const PORT = process.env.PORT || 8080;
@@ -61,6 +62,16 @@ app.use("/api/widgets", widgetsRoutes(db));
 
 
 
+const user = {
+  name: 'Kosta',
+  lastname: 'vlahakis',
+  username: 'Kostakv',
+  email: 'kosta@gmail.ca',
+  password: 'password',
+  phone_number: '647-647-6477'
+}
+
+
 const users = {
   "userRandomID": {
     id: "userRandomID",
@@ -75,7 +86,18 @@ const users = {
     password: "password123"
   },
 }
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// TESTING QUERIES -----------------------------
+console.log('getting userwith email: ')
+database.getUserWithEmail('bobS@hotmail.com');
+console.log('get user with ID:')
+database.getUserWihId(7);
+const myTimeout = setTimeout(database.getAllUsers, 1000);
 
+
+
+// ---------------------------------------------
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 const checkUsername = function(username, password){
