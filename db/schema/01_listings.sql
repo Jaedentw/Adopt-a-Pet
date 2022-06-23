@@ -10,7 +10,9 @@ CREATE TABLE listings (
   birthday DATE NOT NULL,
   price INTEGER NOT NULL DEFAULT 0,
   is_sold BOOLEAN NOT NULL DEFAULT FALSE,
-  readyDate DATE NOT NULL,
+  date_sold DATE,
+  buyer_id INTEGER references users(id) ON DELETE CASCADE,
+  ready_date DATE NOT NULL,
   description VARCHAR(255) NOT NULL,
-  users_id INTEGER references users(id) ON DELETE CASCADE
+  breeder_id INTEGER references users(id) ON DELETE CASCADE
 );

@@ -11,7 +11,7 @@ const { Pool } = require('pg');
 // Creates the database pool
 const pool = new Pool({
   user: 'labber',
-  password: 'labber',
+  password: '123',
   host: 'localhost',
   database: 'midterm'
 });
@@ -31,7 +31,7 @@ const getAllUsers = () => {
   .catch((err) => {
     console.log(err.message);
   });
-}
+};
 
 
 exports.getAllUsers = getAllUsers;
@@ -75,13 +75,13 @@ const getUserWihId = (id) => {
 const addUser =  function(user) {
   const search = `
   INSERT INTO users
-  (name, lastname, username, email, password, phone_number)
-  VALUES ($1, $2, $3, $4, $5, $6)
+  (name, last_name, username, email, password, phone_number, country, city)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
   RETURNING *
   `;
   return pool
   .query(search,
-  [user.name, user.lastname, user.username, user.email, user.password, user.phone_number])
+  [user.name, user.lastname, user.username, user.email, user.password, user.phone_number, user.country, user.city])
   .then((result) => {
    return result.rows[0];
   })
@@ -121,4 +121,5 @@ const addUser =  function(user) {
   //   });
   // }
   // exports.getAllReservations = getAllReservations;
+
 
