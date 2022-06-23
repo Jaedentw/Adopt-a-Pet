@@ -2,15 +2,18 @@
 <html lang="en">
 
 
-<body>
+<body class="profile-body">
 
+  <span class="profile-container">
+    <%- include('partials/profile.ejs') %>
+  </span>
 
-
-
-  <%- include('partials/profile.ejs') %>
-
-  <%- include('partials/pet.ejs') %>
-
+  <span class="pet-list">
+    <%- include('partials/pet.ejs') %>
+    <%- include('partials/pet.ejs') %>
+    <%- include('partials/pet.ejs') %>
+    <%- include('partials/pet.ejs') %>
+  </span>
 
 
 </body>
@@ -18,12 +21,3 @@
 </html>
 
 
-<!--
-  <head>
-
-  <title>Login</title>
-
-  <<%- include('partials/head.ejs'); %>
-
-</head>
--->
