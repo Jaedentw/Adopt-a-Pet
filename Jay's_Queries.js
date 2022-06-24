@@ -10,7 +10,7 @@ const pool = new Pool({
 //user profile information
 const getUserProfile = function(user_id) {
   const sql = `
-  SELECT name, last_name, username, email, phone_number FROM users
+  SELECT name, last_name, username, email, country, city, bio FROM users
   WHERE id = $1;`;
   return pool
   .query (sql, user_id)
