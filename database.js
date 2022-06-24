@@ -11,7 +11,7 @@ const { Pool } = require('pg');
 // Creates the database pool
 const pool = new Pool({
   user: 'labber',
-  password: 'labber',
+  password: '123',
   host: 'localhost',
   database: 'midterm'
 });
@@ -31,7 +31,7 @@ const getAllUsers = () => {
   .catch((err) => {
     console.log(err.message);
   });
-}
+};
 
 
 exports.getAllUsers = getAllUsers;
@@ -75,13 +75,13 @@ const getUserWihId = (id) => {
 const addUser =  function(user) {
   const search = `
   INSERT INTO users
-  (name, lastname, username, email, password, phone_number)
-  VALUES ($1, $2, $3, $4, $5, $6)
+  (name, last_name, username, email, password, phone_number, country, city)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
   RETURNING *
   `;
   return pool
   .query(search,
-  [user.name, user.lastname, user.username, user.email, user.password, user.phone_number])
+  [user.name, user.lastname, user.username, user.email, user.password, user.phone_number, user.country, user.city])
   .then((result) => {
    return result.rows[0];
   })
@@ -97,29 +97,29 @@ const addUser =  function(user) {
  //----------------------------------------------------------------------------------------------------------------
  //----------------------------------------------------------------------------------------------------------------
  //----------------------------------------------------------------------------------------------------------------
- //----------------------------------------------------------------------------------------------------------------
- //----------------------------------------------------------------------------------------------------------------
+ //---------------------------------------------------------------------------------------------------------------
 
 
-  const getAllYourListings = function(guest_id, limit = 10) {
-    return pool
-    .query(`
-    SELECT reservations.id, properties.title, properties.cost_per_night, reservations.start_date, avg(rating) as average_rating
-    FROM reservations
-    JOIN properties ON reservations.property_id = properties.id
-    JOIN property_reviews ON properties.id = property_reviews.property_id
-    WHERE reservations.guest_id = $1
-    GROUP BY properties.id, reservations.id
-    ORDER BY reservations.start_date
-    LIMIT $2;
-    `,
-    [guest_id, limit])
-    .then((result) => {
-      return result.rows;
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-  }
-  exports.getAllReservations = getAllReservations;
+  // const getAllYourListings = function(guest_id, limit = 10) {
+  //   return pool
+  //   .query(`
+  //   SELECT reservations.id, properties.title, properties.cost_per_night, reservations.start_date, avg(rating) as average_rating
+  //   FROM reservations
+  //   JOIN properties ON reservations.property_id = properties.id
+  //   JOIN property_reviews ON properties.id = property_reviews.property_id
+  //   WHERE reservations.guest_id = $1
+  //   GROUP BY properties.id, reservations.id
+  //   ORDER BY reservations.start_date
+  //   LIMIT $2;
+  //   `,
+  //   [guest_id, limit])
+  //   .then((result) => {
+  //     return result.rows;
+  //   })
+  //   .catch((err) => {
+  //     console.log(err.message);
+  //   });
+  // }
+  // exports.getAllReservations = getAllReservations;
+
 

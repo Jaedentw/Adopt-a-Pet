@@ -1,39 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<<<<<<< HEAD
-  <body class="login-main">
-    <%- include('partials/nav.ejs'); %>
-
-    <h1> Login </h1>
-    <div class="login">
-      <span>
-        <label for="email">Email:</label>
-        <textarea id="email"></textarea>
-      </span>
-      <span>
-        <label for="password">Password:</label>
-        <textarea id="password"></textarea>
-      </span>
-    </div>
-  </body>
-=======
 <head>
-  <title>Home Page</title>
 
-  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/main.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/nav.css" type="text/css">0
-  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/scripts/app.js"></script>
+  <title>Login</title>
+
+  <<%- include('partials/head.ejs'); %>
 
 </head>
 
 
 <body>
-  <%- include('./nav.ejs'); %>
 
   <main style="margin: 1em;">
     <form method="POST" action="/login">
@@ -46,6 +23,5 @@
   </main>
 
 </body>
->>>>>>> c3cf1757b607259787293fef36bc6aee69b99686
 
 </html>
