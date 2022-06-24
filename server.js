@@ -47,12 +47,10 @@ app.use(express.static("public"));
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
-const widgetsRoutes = require("./routes/widgets");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
-app.use("/api/widgets", widgetsRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -61,6 +59,16 @@ app.use("/api/widgets", widgetsRoutes(db));
 
 
 database.getUserWithEmail('bobS@hotmail.com')
+
+const user = {
+  name: 'Kosta',
+  lastname: 'vlahakis',
+  username: 'Kostakv',
+  email: 'kosta@gmail.ca',
+  password: 'password',
+  phone_number: '647-647-6477'
+}
+
 
 const users = {
   "userRandomID": {
@@ -76,7 +84,18 @@ const users = {
     password: "password123"
   },
 }
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// TESTING QUERIES -----------------------------
+console.log('getting userwith email: ')
+database.getUserWithEmail('bobS@hotmail.com');
+console.log('get user with ID:')
+database.getUserWihId(7);
+const myTimeout = setTimeout(database.getAllUsers, 1000);
 
+
+
+// ---------------------------------------------
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 const checkUsername = function(username, password){
