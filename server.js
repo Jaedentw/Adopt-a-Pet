@@ -1,5 +1,6 @@
 // load .env data into process.env
 require("dotenv").config();
+const database = require('./database');
 
 // Web server config
 const PORT = process.env.PORT || 8080;
@@ -59,7 +60,7 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Separate them into separate routes files (see above).
 
 
-
+database.getUserWithEmail('bobS@hotmail.com')
 
 const users = {
   "userRandomID": {
