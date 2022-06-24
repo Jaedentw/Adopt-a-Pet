@@ -229,7 +229,7 @@ app.get("/messages", (req, res) => {
 //get sold pets
 app.get("/sold-pets", (req, res) => {
   const templateVars = {};
-  res.render("sold",templateVars);
+  res.render("sold", templateVars);
 });
 
 //listed pets
