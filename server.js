@@ -95,7 +95,7 @@ const myTimeout = setTimeout(database.getAllUsers, 1000);
 
 
 // ---------------------------------------------
-// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// functions
 
 
 const checkUsername = function(username, password){
@@ -122,8 +122,7 @@ const checkUserEmail = function (username, email){
 
 
 
-
-
+//requests
 
 app.get("/", (req, res) => {
   const templateVars = {};
@@ -188,7 +187,7 @@ app.post("/register", (req, res) => {
 // get for profile page
 app.get("/profile", (req, res) => {
   const templateVars = {};
-  res.render("profile",templateVars);
+  res.render("profile-page",templateVars);
 });
 
 // post request for profile page
@@ -215,8 +214,29 @@ app.post("/logout", (req, res) => {
 
 });
 
+//get saved pets
+app.get("/saved-pets", (req, res) => {
+  const templateVars = {};
+  res.render("favourites",templateVars);
+});
 
+//get messages
+app.get("/messages", (req, res) => {
+  const templateVars = {};
+  res.render("messages",templateVars);
+});
 
+//get sold pets
+app.get("/sold-pets", (req, res) => {
+  const templateVars = {};
+  res.render("sold", templateVars);
+});
+
+//listed pets
+app.get("/listed-pets", (req, res) => {
+  const templateVars = {};
+  res.render("listed",templateVars);
+});
 
 
 app.listen(PORT, () => {

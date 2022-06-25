@@ -7,13 +7,9 @@
 
 <body class="profile-body">
 
-  <span class="profile-container">
-    <%- include('partials/profile.ejs') %>
-  </span>
-
   <span class="pet-list">
-    <div class="span-title">
-      Jaeden's Listings
+    <div class="span-title init-text">
+      Your Sold Listings
     </div>
     <%- include('partials/pet.ejs') %>
     <%- include('partials/pet.ejs') %>
@@ -21,9 +17,14 @@
     <%- include('partials/pet.ejs') %>
   </span>
 
+  <span class="profile-container">
+    <div class="span-title init-text">Pet Owner</div>
+    <%- include('partials/profile.ejs') %>
+    <div class="span-title init-text">Adoption Details</div>
+    <%- include('partials/adopt.ejs') %>
+  </span>
+
 
 </body>
 
 </html>
-
-

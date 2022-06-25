@@ -44,10 +44,12 @@ const userListings = function(breeder_id) {
 
 exports.userListings = userListings;
 
-//All of a breeders sold listings
-const soldListings = function(breeder_id) {
+//All of a breeders sold listings and their owners
+const soldAndOwner = function(breeder_id) {
   const sql = `
-  SELECT * FROM listings
+  SELECT users.*, listings.* FROM listings
+  JOIN users
+  ON users.id = listings.owner_id
   WHERE breeder_id = $1 AND is_sold = true
   ORDER BY date_sold DESC;`;
   return pool
