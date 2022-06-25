@@ -58,7 +58,7 @@ app.use("/api/users", usersRoutes(db));
 // Separate them into separate routes files (see above).
 
 
-
+database.getUserWithEmail('bobS@hotmail.com')
 
 const user = {
   name: 'Kosta',
