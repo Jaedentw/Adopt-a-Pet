@@ -12,7 +12,7 @@ CREATE TABLE users (
   phone_number VARCHAR(255) NOT NULL,
   country VARCHAR(255) NOT NULL,
   city VARCHAR(255) NOT NULL,
-  bio VARCHAR(255) DEFAULT Bio,
+  bio TEXT,
   is_admin BOOLEAN NOT NULL DEFAULT FALSE
 );
 
