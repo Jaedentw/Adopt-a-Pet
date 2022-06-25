@@ -86,11 +86,11 @@ const users = {
 }
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 // TESTING QUERIES -----------------------------
-console.log('getting userwith email: ')
-database.getUserWithEmail('bobS@hotmail.com');
-console.log('get user with ID:')
-database.getUserWihId(7);
-const myTimeout = setTimeout(database.getAllUsers, 1000);
+// console.log('getting userwith email: ')
+// database.getUserWithEmail('bobS@hotmail.com');
+// console.log('get user with ID:')
+// database.getUserWihId(7);
+// const myTimeout = setTimeout(database.getAllUsers, 1000);
 
 
 
