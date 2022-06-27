@@ -25,7 +25,7 @@ const getAllUsers = () => {
   return pool
   .query(search)
   .then((result) => {
-    console.log(result.rows)
+    // console.log(result.rows)
     return result.rows;
   })
   .catch((err) => {
@@ -45,7 +45,7 @@ const getUserWithEmail = (email) => {
   return pool
     .query(search, [email])
     .then((result) => {
-      console.log(result.rows);
+      // console.log(result.rows);
       return result.rows;
     })
     .catch((err) => {
@@ -63,7 +63,7 @@ const getUserWihId = (id) => {
   return pool
     .query(search, [id])
     .then((result) => {
-      console.log(result.rows);
+      // console.log(result.rows);
       return result.rows;
     })
     .catch((err) => {
@@ -99,27 +99,5 @@ const addUser =  function(user) {
  //----------------------------------------------------------------------------------------------------------------
  //---------------------------------------------------------------------------------------------------------------
 
-
-  // const getAllYourListings = function(guest_id, limit = 10) {
-  //   return pool
-  //   .query(`
-  //   SELECT reservations.id, properties.title, properties.cost_per_night, reservations.start_date, avg(rating) as average_rating
-  //   FROM reservations
-  //   JOIN properties ON reservations.property_id = properties.id
-  //   JOIN property_reviews ON properties.id = property_reviews.property_id
-  //   WHERE reservations.guest_id = $1
-  //   GROUP BY properties.id, reservations.id
-  //   ORDER BY reservations.start_date
-  //   LIMIT $2;
-  //   `,
-  //   [guest_id, limit])
-  //   .then((result) => {
-  //     return result.rows;
-  //   })
-  //   .catch((err) => {
-  //     console.log(err.message);
-  //   });
-  // }
-  // exports.getAllReservations = getAllReservations;
 
 
