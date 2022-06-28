@@ -12,19 +12,70 @@
 
 <body class="registration-body">
 
-  <main style="margin: 1em;">
-    <form method="POST" action="/register">
-      <label for="fname">email:</label><br>
-       <input type="email" id="email" name="email"><br>
-       <label for="fname">username:</label><br>
-       <input type="username" id="username" name=""><br>
-      <label for="lname">Password:</label><br>
-      <input type="password" id="password" name="password">
-      <button type="submit">Register</button>
-    </form>
-  </main>
 
-  <h1>Have fun!!!! 🥔</h1>
+  <form method="POST" action="/register" class="register">
+
+    <div class="reg-column">
+      <span>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName">
+      </span>
+
+      <span>
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country">
+      </span>
+
+      <span>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+      </span>
+
+      <span>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+      </span>
+
+      <span>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+      </span>
+    </div>
+
+
+    <div class="reg-column">
+
+      <span>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName">
+      </span>
+
+      <span>
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city">
+      </span>
+
+      <span>
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="phone">
+      </span>
+
+      <span>
+        <label for="cPassword">Confirm Password:</label>
+        <input type="password" id="cPassword" name="cPassword">
+      </span>
+
+      <span class="reg-nb">
+        <label for="breeder">Are you a Breeder? If yes please check here:</label>
+        <input type="checkbox" id="breeder" name="breeder" class="reg-check">
+      </span>
+
+    </div>
+
+  </form>
+
+  <button type="submit" class="reg-button">Register</button>
+
 </body>
 
 </html>
