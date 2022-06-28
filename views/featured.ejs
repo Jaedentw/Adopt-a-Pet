@@ -10,6 +10,23 @@
       <%- include('partials/pet.ejs') %>
     </div>
   </div>
+
+  <div class="login-body">
+
+    <main class="login">
+      <form method="POST" action="/login">
+        <label for="fname">Username:</label><br>
+         <input type="username" id="username" name="username"><br>
+        <label for="lname">Password:</label><br>
+        <input type="password" id="password" name="password">
+        <button type="submit">Login</button>
+      </form>
+    </main>
+
+    <div class="redirect"> Not signed up? Register <a href="http://localhost:8080/register">Here!</a></div>
+
+  </div>
 </body>
+
 
 </html>
