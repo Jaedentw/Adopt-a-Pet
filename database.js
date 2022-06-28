@@ -101,7 +101,7 @@ const addUser =  function(user) {
  //----------------------------------------------------------------------------------------------------------------
 
 
-  const getAllYourListings = function(guest_id, limit = 10) {
+  /*const getAllYourListings = function(guest_id, limit = 10) {
     return pool
     .query(`
     SELECT reservations.id, properties.title, properties.cost_per_night, reservations.start_date, avg(rating) as average_rating
@@ -121,5 +121,4 @@ const addUser =  function(user) {
       console.log(err.message);
     });
   }
-  exports.getAllReservations = getAllReservations;
-
+*/
