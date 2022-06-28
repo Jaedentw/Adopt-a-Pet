@@ -49,3 +49,28 @@
   margin-top: 10px;
   width: 100%;
 }
+
+.login-body {
+  display: flex;
+  width: 25%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+  margin: 20px;
+}
+
+.login {
+  display: flex;
+  background-color: white;
+  border: 5px solid #333;
+  border-radius: 6px;
+  width: max-content;
+  height: max-content;
+  padding: 10px;
+  margin: 20px;
+}
+
+.redirect  {
+  margin: 5px;
+}
