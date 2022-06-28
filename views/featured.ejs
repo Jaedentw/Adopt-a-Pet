@@ -2,15 +2,30 @@
 <html lang="en">
 
 <body class="featured-body">
-  <div class="featured">
-    <div class="span-title">
-      Adoptable Near You!
-    </div>
-    <div class="featured-pets">
-      <%- include('partials/pet.ejs') %>
-    </div>
-  </div>
 
+  <form method="POST" action="/">
+    <label>Country:</label>
+    <input type="text" id="country" name="country">
+    <lable>City:</lable>
+    <input type="text" id="city" name="city">
+    <lable>Type:</lable>
+    <input type="text" id="type" name="type">
+    <lable>Breed:</lable>
+    <input type="text" id="breed" name="breed">
+    <lable>Gender:</lable>
+    <input type="text" id="gender" name="gender">
+    <lable>Price</lable>
+    <input type="text" id="price" name="price">
+    <lable>Earliest Take Home Date:</lable>
+    <input type="text" id="ready_date" name="ready_date">
+  </form>
+
+</body>
+
+</html>
+
+
+<!--
   <div class="login-body">
 
     <main class="login">
@@ -26,7 +41,4 @@
     <div class="redirect"> Not signed up? Register <a href="http://localhost:8080/register">Here!</a></div>
 
   </div>
-</body>
-
-
-</html>
+-->

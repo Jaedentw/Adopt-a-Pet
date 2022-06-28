@@ -47,6 +47,11 @@ const search = function(user_id, country, options) {
     queryText += `AND city LIKE $${params.city} `;
   }
 
+  if (options.country) {
+    queryParams.push(`%${options.country}%`);
+    queryText += `AND country LIKE $${params.ccountry} `;
+  }
+
   return pool
   .query (queryText, queryParams)
   .then ((result) => {
