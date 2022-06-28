@@ -73,5 +73,23 @@
 [] saved items page
 [] sales post page
 
+### DATABASE
+[] Search Queries - Fetch your posts --> All pets you have up for adoption
+                  - Get featured posts --> Featured
+                  - Get specific user --> User and all their pets up for adoption
+                  - get all favourites --> Saved pets
+                  - user by email
+                  - Filter items by **price**, (location, breed, color, type,) --> price required
+                  - records of sold pets --> all pets marked as sold
+                  
 
+### TODO FUNCATIONALITY
+        - message buttons
+        - saving process
+        - listings page
+        - search bar (filters)
+        - editing queries
+        - login / logout button
+        - cards percisting with queries
+        - registration page.
 
