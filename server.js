@@ -47,12 +47,10 @@ app.use(express.static("public"));
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
-const widgetsRoutes = require("./routes/widgets");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
-app.use("/api/widgets", widgetsRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -60,7 +58,7 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Separate them into separate routes files (see above).
 
 
-
+database.getUserWithEmail('bobS@hotmail.com')
 
 const user = {
   name: 'Kosta',
@@ -97,7 +95,7 @@ const myTimeout = setTimeout(database.getAllUsers, 1000);
 
 
 // ---------------------------------------------
-// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// functions
 
 
 const checkUsername = function(username, password){
@@ -124,8 +122,7 @@ const checkUserEmail = function (username, email){
 
 
 
-
-
+//requests
 
 app.get("/", (req, res) => {
   const templateVars = {};
@@ -190,7 +187,7 @@ app.post("/register", (req, res) => {
 // get for profile page
 app.get("/profile", (req, res) => {
   const templateVars = {};
-  res.render("profile",templateVars);
+  res.render("profile-page",templateVars);
 });
 
 // post request for profile page
@@ -217,8 +214,29 @@ app.post("/logout", (req, res) => {
 
 });
 
+//get saved pets
+app.get("/saved-pets", (req, res) => {
+  const templateVars = {};
+  res.render("favourites",templateVars);
+});
 
+//get messages
+app.get("/messages", (req, res) => {
+  const templateVars = {};
+  res.render("messages",templateVars);
+});
 
+//get sold pets
+app.get("/sold-pets", (req, res) => {
+  const templateVars = {};
+  res.render("sold", templateVars);
+});
+
+//listed pets
+app.get("/listed-pets", (req, res) => {
+  const templateVars = {};
+  res.render("listed",templateVars);
+});
 
 
 app.listen(PORT, () => {
