@@ -19,37 +19,37 @@ const search = function(user_id, country, options) {
 
   if (options.type) {
     queryParams.push(`%${options.type}%`);
-    queryText += `AND type LIKE $${params.length} `;
+    queryText += `AND type LIKE $${queryParams.length} `;
   }
 
   if (options.breed) {
     queryParams.push(`%${options.breed}%`);
-    queryText += `AND breed LIKE $${params.length} `;
+    queryText += `AND breed LIKE $${queryParams.length} `;
   }
 
   if (options.gender) {
     queryParams.push(`%${options.gender}%`);
-    queryText += `AND gender LIKE $${params.gender} `;
+    queryText += `AND gender LIKE $${queryParams.length} `;
   }
 
   if (options.price) {
     queryParams.push(`%${options.price}%`);
-    queryText += `AND price LIKE $${params.price} `;
+    queryText += `AND price LIKE $${queryParams.length} `;
   }
 
   if (options.ready_date) {
     queryParams.push(`%${options.ready_date}%`);
-    queryText += `AND ready_date LIKE $${params.ready_date} `;
+    queryText += `AND ready_date LIKE $${queryParams.length} `;
   }
 
   if (options.city) {
     queryParams.push(`%${options.city}%`);
-    queryText += `AND city LIKE $${params.city} `;
+    queryText += `AND city LIKE $${queryParams.length} `;
   }
 
   if (options.country) {
     queryParams.push(`%${options.country}%`);
-    queryText += `AND country LIKE $${params.ccountry} `;
+    queryText += `AND country LIKE $${queryParams.length} `;
   }
 
   return pool
