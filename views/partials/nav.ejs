@@ -9,7 +9,7 @@
         <i class="fa-solid fa-gear"></i> Settings
       </b>
       <b>
-        <% if (user){ %>
+       <% if (user){ %>
         <form action="/logout/<%=user.id%>" method="GET">
           <button type="submit">Logout</button>
           </form>

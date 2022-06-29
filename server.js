@@ -1,6 +1,8 @@
 // load .env data into process.env
 require("dotenv").config();
 const database = require('./database');
+const search = require('./Queries/search_filters.js')
+const listings = require('./Queries/Jays_Queries.js')
 
 // Web server config
 const PORT = process.env.PORT || 8080;
@@ -62,8 +64,6 @@ app.use("/api/users", usersRoutes(db));
 // ---------------------------------------------
 // functions
 
-
-
 app.get('/login/:id', (req, res) => {
 
       req.session.userId = req.params.id;
@@ -73,15 +73,24 @@ app.get('/login/:id', (req, res) => {
 });
 
 
-//requests
-
 app.get("/", (req, res) => {
   const id = req.session.userId;
-  database.getUserWihId(id)
-  .then(user =>{
+  const user = database.getUserWihId(id)
+  const listings_promise = listings.getAllListings()
 
-    res.render("index",{user});
+  return Promise.all([user,listings_promise])
+  .then( ([user,listings]) => {
+    //res.json(templateVars);
+    console.log("Listings",listings)
+    res.render("index",{user,listings});
   })
+
+
+
+});
+
+app.post("/", (req, res) => {
+  res.render("/");
 });
 
 
