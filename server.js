@@ -141,18 +141,6 @@ app.get('/logout/:id', (req, res) => {
 
 });
 
-//get saved pets
-app.get("/saved-pets", (req, res) => {
-  const templateVars = {userID: req.session.userId, users: users};
-  res.render("favourites",templateVars);
-});
-
-//get messages
-app.get("/messages", (req, res) => {
-  const templateVars = {userID: req.session.userId, users: users};
-  res.render("messages",templateVars);
-});
-
 //get sold pets
 app.get("/sold-pets", (req, res) => {
   const templateVars = {userID: req.session.userId, users: users};
