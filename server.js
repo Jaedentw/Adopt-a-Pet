@@ -82,10 +82,8 @@ app.get("/", (req, res) => {
 
   return Promise.all([user,listings_promise])
   .then( ([user,listings]) => {
-    res.render("index",{user,listings});
+    res.render("featured",{user,listings});
   })
-
-
 
 });
 
@@ -126,24 +124,13 @@ app.post("/register", (req, res) => {
 
 // get for profile page
 app.get("/profile", (req, res) => {
-  const templateVars = {userID: req.session.userId, users: users};
+  const templateVars = {userID: req.session.userId, user: user};
   res.render("profile-page",templateVars);
 });
 
 // post request for profile page
 app.post("/profile", (req, res) => {
   res.render("register");
-});
-
-// get request for settings page
-app.get("/settings", (req, res) => {
-  const templateVars = {userID: req.session.userId, users: users};
-  res.render("settings",templateVars);
-});
-
-// post request for settings page
-app.post("/settings", (req, res) => {
-  res.render("settings");
 });
 
 
@@ -158,7 +145,7 @@ app.get('/logout/:id', (req, res) => {
 
 //get sold pets
 app.get("/sold-pets", (req, res) => {
-  const templateVars = {userID: req.session.userId, users: users};
+  const templateVars = {userID: req.session.userId, user: database.user};
   res.render("sold", templateVars);
 });
 
@@ -169,11 +156,17 @@ app.get("/listed-pets", (req, res) => {
   const listings_promise = listings.userListings(id)
 
   return Promise.all([user,listings_promise])
-  .then( ([user,listings]) => {
-    res.render("listed",{user,listings});
+  .then( ([user,listings_promise]) => {
+    res.render("listed",{user,listings_promise});
   })
 })
 
+app.post("/savepet", (req, res) => {
+  console.log(req.session);
+  const user_id = req.session.userId;
+  const pet_id = 0;
+
+})
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
