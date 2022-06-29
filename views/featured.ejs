@@ -2,14 +2,54 @@
 <html lang="en">
 
 <body class="featured-body">
-  <div class="featured">
-    <div class="span-title">
-      Adoptable Near You!
-    </div>
-    <div class="featured-pets">
-      <%- include('partials/pet.ejs') %>
-    </div>
+
+
+  <div class="search-params">
+    <div class="span-title hover-shadow">What are you looking for?</div>
+    <form method="POST" action="/" class="params">
+      <span>
+        <label>Country:</label>
+        <input type="text" id="country" name="country">
+      </span>
+      <span>
+        <lable>City:</lable>
+        <input type="text" id="city" name="city">
+      </span>
+      <span>
+        <lable>Type:</lable>
+        <input type="text" id="type" name="type">
+      </span>
+      <span>
+        <lable>Breed:</lable>
+        <input type="text" id="breed" name="breed">
+      </span>
+      <span>
+        <lable>Gender:</lable>
+        <input type="text" id="gender" name="gender">
+      </span>
+      <span>
+        <lable>Price</lable>
+        <input type="text" id="price" name="price">
+      </span>
+      <span>
+        <lable>Desired Take Home Date:</lable>
+        <input type="text" id="ready_date" name="ready_date">
+      </span>
+      <button class="hover-shadow search-button">Search</button>
+    </form>
+  </div>
+
+  <div class="search-res">
+
+    <%- include('partials/pet.ejs'); %>
+  </div>
+
+  <div class="side-buttons">
+    <button class="hover-shadow search-button"><i class="fa-solid fa-heart"></i>   My Favourites</button>
+    <button class="hover-shadow search-button"><i class="fa-solid fa-map-pin"></i>   Near Me</button>
+    <button class="hover-shadow search-button"><i class="fa-solid fa-list"></i>   My Listings</button>
   </div>
 </body>
 
 </html>
+

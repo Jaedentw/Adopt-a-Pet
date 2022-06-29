@@ -83,4 +83,11 @@
                   - records of sold pets --> all pets marked as sold
                   
 
+### TODO FUNCATIONALITY
+        - message buttons (funcationality)
+        - saving process
+        - listings page
+        - search bar (filters)
+        - editing queries
+        - cards percisting with queries
 

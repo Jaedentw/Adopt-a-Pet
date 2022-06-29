@@ -7,15 +7,29 @@
     <%- include('partials/head.ejs') %>
   </head>
 
-  <body class="featured-body">
-    <div class="featured">
+
+  <body class="listed-body">
+
+
+    <div class="listed-container">
+
       <div class="span-title">
-        Adoptable Near You!
+        Your Listings
       </div>
-      <div class="featured-pets">
+
+      <div class="cards-edits">
+
         <%- include('partials/pet.ejs') %>
+
+        <div class="edits hover-shadow">
+          Settings
+        </div>
       </div>
+
     </div>
+
+
   </body>
+
 
 </html>
