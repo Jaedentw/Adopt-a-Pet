@@ -2,7 +2,7 @@
 <% for (const pets in listings) { %>
 <div class="pet-container hover-shadow">
     <div class="row">
-      <img src="https://scontent.fyyc3-1.fna.fbcdn.net/v/t39.30808-6/287130031_10166182027805332_7915155410566322252_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=zbNOzXF1k-EAX-DL-FH&_nc_ht=scontent.fyyc3-1.fna&oh=00_AT_0muzJqMzjW9hv9kKfJ0qmmt7MdDu96_4xbsBEIe13gg&oe=62B8EB9F" class="image"></img>
+      <img src="<%=listings[pets].thumbnail_photo_url%>" class="image"></img>
 
       <div class="column">
 
@@ -63,6 +63,3 @@
 
 </div>
 <% } %>
-
-
-</html>
