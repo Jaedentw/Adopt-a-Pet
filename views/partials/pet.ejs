@@ -10,22 +10,22 @@
 
         <span>
           <%// output pet object data after each lable  %>
-          <p>Current Name: <%pets.name%> </p>
+          <p>Current Name: <%-listings[pets].name%> </p>
 
-          <p>Breeder:</p>
+          <p>Breeder: <%-listings[pets].buyer_id%></p>
         </span>
 
         <span>
-          <p>Type:</p>
-          <p>Price:</p>
+          <p>Type: <%-listings[pets].type%></p>
+          <p>Price: <%-listings[pets].price%></p>
         </span>
 
         <span>
           <p>
-            <time>Birthday:</time>
+            <time>Birthday: <%-listings[pets].birthday%></time>
           </p>
           <p>
-            <time>Take home date:</time>
+            <time>Take home date: <%-listings[pets].ready_date%></time>
           </p>
         </span>
 
@@ -34,12 +34,12 @@
       <div class="text">
 
         <div class="row space-between">
-          <p>Coloring:</p>
-          <p>Gender:</p>
-          <p>Breed:</p>
+          <p>Coloring: <%-listings[pets].colour%></p>
+          <p>Gender:<%-listings[pets].gender%></p>
+          <p>Breed:<%-listings[pets].breed%></p>
         </div>
 
-        <p>Description:</p>
+        <p>Description: <%-listings[pets].description%></p>
 
       </div>
 

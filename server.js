@@ -80,9 +80,9 @@ app.get("/", (req, res) => {
 
   return Promise.all([user,listings_promise])
   .then( ([user,listings]) => {
-    templateVars = {user,listings}
     //res.json(templateVars);
-    res.render("index",templateVars);
+    console.log("Listings",listings)
+    res.render("index",{user,listings});
   })
 
 
