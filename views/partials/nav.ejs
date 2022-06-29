@@ -7,7 +7,15 @@
         <i class="fa-solid fa-gear"></i> Settings
       </b>
       <b>
-        <i class="fa-solid fa-user"></i> Logout
+       <% if (user){ %>
+        <form action="/logout/<%=user.id%>" method="GET">
+          <button type="submit">Logout</button>
+          </form>
+          Logged in as: <%=user.username%>
+          <% } %>
+
+
+
       </b>
     </div>
   </header>

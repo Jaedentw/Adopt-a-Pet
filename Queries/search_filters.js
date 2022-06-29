@@ -7,7 +7,7 @@ const pool = new Pool({
   database: 'midterm'
 });
 
-const search = function(options, user_id) {
+const search = function(user_id, options) {
   const queryParams = [user_id];
   const queryText = `
   SELECT listings.*, users.username FROM listings
@@ -66,7 +66,6 @@ exports.search = search;
 
 /*
 --TEMPLATE--
-
 const 1 = function(user_id) {
   const sql = ``;
   return pool

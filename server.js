@@ -1,6 +1,8 @@
 // load .env data into process.env
 require("dotenv").config();
 const database = require('./database');
+const search = require('./Queries/search_filters.js')
+const listings = require('./Queries/Jays_Queries.js')
 
 // Web server config
 const PORT = process.env.PORT || 8080;
@@ -47,6 +49,7 @@ app.use(express.static("public"));
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
+const { password, user } = require("pg/lib/defaults");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -58,109 +61,38 @@ app.use("/api/users", usersRoutes(db));
 // Separate them into separate routes files (see above).
 
 
-database.getUserWithEmail('bobS@hotmail.com')
-
-const user = {
-  name: 'Kosta',
-  lastname: 'vlahakis',
-  username: 'Kostakv',
-  email: 'kosta@gmail.ca',
-  password: 'password',
-  phone_number: '647-647-6477'
-}
-
-
-const users = {
-  "userRandomID": {
-    id: "userRandomID",
-    email: "test@yahoo.ca",
-    username: "testUser",
-    password: "password"
-  },
-  "user2RandomID": {
-    id: "user2RandomID",
-    email: "test123@gmail.ca",
-    username: "userTest",
-    password: "password123"
-  },
-}
-// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-// TESTING QUERIES -----------------------------
-console.log('getting userwith email: ')
-database.getUserWithEmail('bobS@hotmail.com');
-console.log('get user with ID:')
-database.getUserWihId(7);
-const myTimeout = setTimeout(database.getAllUsers, 1000);
-
-
-
 // ---------------------------------------------
 // functions
 
+app.get('/login/:id', (req, res) => {
 
-const checkUsername = function(username, password){
-  for (const key in users) {
-    if (username === users[key].username){
-      if (password === users[key].password){
-        return true;
-      }
-    }
-    else {
-      return false;
-    }
-  }
-}
-
-const checkUserEmail = function (username, email){
-    for (const key in users) {
-      if (username === users[key].username || email === users[key].email){
-        return true;
-      }
-    }
-    return false;
-}
+      req.session.userId = req.params.id;
+      res.redirect("/");
 
 
+});
 
-//requests
 
 app.get("/", (req, res) => {
-  const templateVars = {};
-  res.render("index",templateVars);
-});
+  const id = req.session.userId;
+  const user = database.getUserWihId(id)
+  const listings_promise = listings.getAllListings()
 
+  return Promise.all([user,listings_promise])
+  .then( ([user,listings]) => {
+    //res.json(templateVars);
+    console.log("Listings",listings)
+    res.render("index",{user,listings});
+  })
 
-// get request for login
-app.get("/login", (req, res) => {
-  const templateVars = {};
-  console.log("at the log in page")
-  res.render("login",templateVars);
-});
-
-// post request for login
-app.post("/login", (req, res) => {
-
-  const username = req.body.username;
-  const password = req.body.password;
-  if (checkUsername(username,password)){
-    res.redirect("/");
-    console.log(`Login successful!!!!!`)
-    console.log(users)
-  }
-  else {
-    res.redirect("login");
-    console.log(users)
-    console.log("Login failed!!!!!!")
-  }
 
 
 });
 
-// get request for register
-app.get("/register", (req, res) => {
-  const templateVars = {};
-  res.render("register",templateVars);
+app.post("/", (req, res) => {
+  res.render("/");
 });
+
 
 // post request for register
 app.post("/register", (req, res) => {
@@ -172,21 +104,14 @@ app.post("/register", (req, res) => {
     res.status(400).send("Email or username already registered");
 
   } else {
-    let userID = "hello";
-    users[userID] = {
-      userID,
-      email: req.body.email,
-      username: req.body.username,
-      password: req.body.password
-    };
+
   }
-  console.log(users)
   res.redirect("/");
 });
 
 // get for profile page
 app.get("/profile", (req, res) => {
-  const templateVars = {};
+  const templateVars = {userID: req.session.userId, users: users};
   res.render("profile-page",templateVars);
 });
 
@@ -197,7 +122,7 @@ app.post("/profile", (req, res) => {
 
 // get request for settings page
 app.get("/settings", (req, res) => {
-  const templateVars = {};
+  const templateVars = {userID: req.session.userId, users: users};
   res.render("settings",templateVars);
 });
 
@@ -208,21 +133,23 @@ app.post("/settings", (req, res) => {
 
 
 // Post to logout
-app.post("/logout", (req, res) => {
-  req.session.user_id = undefined; // Clears cookies, redirects to homepage.
-  res.redirect("/")
+app.get('/logout/:id', (req, res) => {
+
+  req.session.userId = null;
+  res.redirect("/");
+
 
 });
 
 //get sold pets
 app.get("/sold-pets", (req, res) => {
-  const templateVars = {};
+  const templateVars = {userID: req.session.userId, users: users};
   res.render("sold", templateVars);
 });
 
 //listed pets
 app.get("/listed-pets", (req, res) => {
-  const templateVars = {};
+  const templateVars = {userID: req.session.userId, users: users};
   res.render("listed",templateVars);
 });
 
@@ -232,4 +159,8 @@ app.listen(PORT, () => {
 });
 
 
+
+/*
+TEST FUNCTION
+*/
 
