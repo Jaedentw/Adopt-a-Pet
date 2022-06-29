@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<%// loop through the pets from our tempalateVars %>
 
 <div class="pet-container hover-shadow">
 
@@ -12,7 +11,8 @@
       <div class="details-bar">
 
         <span>
-          <p>Current Name:</p>
+          <%// output pet object data after each lable  %>
+          <p>Current Name: <%= 'testName' %> </p>
           <p>Breeder:</p>
         </span>
 
@@ -63,7 +63,3 @@
   </div>
 
 </div>
-
-
-
-</html>
