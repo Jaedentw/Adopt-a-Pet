@@ -97,15 +97,6 @@ app.post("/", (req, res) => {
 // post request for register
 app.post("/register", (req, res) => {
 
-  if (!req.body.email || !req.body.password || !req.body.username) {
-    res.status(400).send("Error, Please enter all fields requierd");
-  } else if (checkUserEmail(req.body.username,req.body.email)) {
-
-    res.status(400).send("Email or username already registered");
-
-  } else {
-
-  }
   res.redirect("/");
 });
 
@@ -149,9 +140,15 @@ app.get("/sold-pets", (req, res) => {
 
 //listed pets
 app.get("/listed-pets", (req, res) => {
-  const templateVars = {userID: req.session.userId, users: users};
-  res.render("listed",templateVars);
-});
+  const id = req.session.userId;
+  const user = database.getUserWihId(id)
+  const listings_promise = listings.userListings(id)
+
+  return Promise.all([user,listings_promise])
+  .then( ([user,listings]) => {
+    res.render("listed",{user,listings});
+  })
+})
 
 
 app.listen(PORT, () => {
