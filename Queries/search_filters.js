@@ -7,14 +7,13 @@ const pool = new Pool({
   database: 'midterm'
 });
 
-const search = function(user_id, country, options) {
-  const queryParams = [user_id, country];
+const search = function(options, user_id) {
+  const queryParams = [user_id];
   const queryText = `
   SELECT listings.*, users.username FROM listings
   JOIN users
   ON users.id = listings.owner_id
   WHERE breeder_id IS NOT $1
-  AND country = $2
   AND is_sold IS NOT true `;
 
   if (options.type) {

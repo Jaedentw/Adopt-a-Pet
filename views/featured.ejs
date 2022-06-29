@@ -3,42 +3,51 @@
 
 <body class="featured-body">
 
-  <form method="POST" action="/">
-    <label>Country:</label>
-    <input type="text" id="country" name="country">
-    <lable>City:</lable>
-    <input type="text" id="city" name="city">
-    <lable>Type:</lable>
-    <input type="text" id="type" name="type">
-    <lable>Breed:</lable>
-    <input type="text" id="breed" name="breed">
-    <lable>Gender:</lable>
-    <input type="text" id="gender" name="gender">
-    <lable>Price</lable>
-    <input type="text" id="price" name="price">
-    <lable>Desired Take Home Date:</lable>
-    <input type="text" id="ready_date" name="ready_date">
-  </form>
+  <div class="search-params">
+    <div class="span-title hover-shadow">What are you looking for?</div>
+    <form method="POST" action="/" class="params">
+      <span>
+        <label>Country:</label>
+        <input type="text" id="country" name="country">
+      </span>
+      <span>
+        <lable>City:</lable>
+        <input type="text" id="city" name="city">
+      </span>
+      <span>
+        <lable>Type:</lable>
+        <input type="text" id="type" name="type">
+      </span>
+      <span>
+        <lable>Breed:</lable>
+        <input type="text" id="breed" name="breed">
+      </span>
+      <span>
+        <lable>Gender:</lable>
+        <input type="text" id="gender" name="gender">
+      </span>
+      <span>
+        <lable>Price</lable>
+        <input type="text" id="price" name="price">
+      </span>
+      <span>
+        <lable>Desired Take Home Date:</lable>
+        <input type="text" id="ready_date" name="ready_date">
+      </span>
+      <button class="hover-shadow search-button">Search</button>
+    </form>
+  </div>
 
+  <div class="search-res">
+
+  </div>
+
+  <div class="side-buttons">
+    <button class="hover-shadow search-button"><i class="fa-solid fa-heart"></i>   My Favourites</button>
+    <button class="hover-shadow search-button"><i class="fa-solid fa-map-pin"></i>   Near Me</button>
+    <button class="hover-shadow search-button"><i class="fa-solid fa-list"></i>   My Listings</button>
+  </div>
 </body>
 
 </html>
 
-
-<!--
-  <div class="login-body">
-
-    <main class="login">
-      <form method="POST" action="/login">
-        <label for="fname">Username:</label><br>
-         <input type="username" id="username" name="username"><br>
-        <label for="lname">Password:</label><br>
-        <input type="password" id="password" name="password">
-        <button type="submit">Login</button>
-      </form>
-    </main>
-
-    <div class="redirect"> Not signed up? Register <a href="http://localhost:8080/register">Here!</a></div>
-
-  </div>
--->
