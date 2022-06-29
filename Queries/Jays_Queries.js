@@ -33,7 +33,7 @@ const userListings = function(breeder_id) {
   WHERE breeder_id = $1 AND is_sold = false
   ORDER BY date_sold DESC;`;
   return pool
-  .query (sql, breeder_id)
+  .query (sql, [breeder_id])
   .then ((result) => {
     return result.rows;
   })
@@ -53,7 +53,7 @@ const soldAndOwner = function(breeder_id) {
   WHERE breeder_id = $1 AND is_sold = true
   ORDER BY date_sold DESC;`;
   return pool
-  .query (sql, breeder_id)
+  .query (sql, [breeder_id])
   .then ((result) => {
     return result.rows;
   })
