@@ -64,6 +64,8 @@ app.use("/api/users", usersRoutes(db));
 // ---------------------------------------------
 // functions
 
+
+
 app.get('/login/:id', (req, res) => {
 
       req.session.userId = req.params.id;
@@ -80,8 +82,6 @@ app.get("/", (req, res) => {
 
   return Promise.all([user,listings_promise])
   .then( ([user,listings]) => {
-    //res.json(templateVars);
-    console.log("Listings",listings)
     res.render("index",{user,listings});
   })
 
@@ -90,22 +90,37 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-  res.render("/");
+  const options = {
+    country: req.body.country,
+    city: req.body.city,
+    type: req.body.type,
+    breed: req.body.breed,
+    gender: req.body.gender,
+    price: req.body.price,
+    ready_date: req.body.ready_date
+
+  }
+  Object.keys(options).forEach(key => {
+    if (options[key] === '') {
+      delete options[key];
+    }
+  });
+  const id = req.session.userId;
+  const user = database.getUserWihId(id)
+  const filters = search.search(id,options);
+
+  return Promise.all([user,filters])
+  .then( ([user,listings]) => {
+    console.log('These are the filters: ', options)
+    res.render("index",{user,listings});
+  })
+
 });
 
 
 // post request for register
 app.post("/register", (req, res) => {
 
-  if (!req.body.email || !req.body.password || !req.body.username) {
-    res.status(400).send("Error, Please enter all fields requierd");
-  } else if (checkUserEmail(req.body.username,req.body.email)) {
-
-    res.status(400).send("Email or username already registered");
-
-  } else {
-
-  }
   res.redirect("/");
 });
 
@@ -149,9 +164,15 @@ app.get("/sold-pets", (req, res) => {
 
 //listed pets
 app.get("/listed-pets", (req, res) => {
-  const templateVars = {userID: req.session.userId, users: users};
-  res.render("listed",templateVars);
-});
+  const id = req.session.userId;
+  const user = database.getUserWihId(id)
+  const listings_promise = listings.userListings(id)
+
+  return Promise.all([user,listings_promise])
+  .then( ([user,listings]) => {
+    res.render("listed",{user,listings});
+  })
+})
 
 
 app.listen(PORT, () => {

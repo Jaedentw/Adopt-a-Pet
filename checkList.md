@@ -84,12 +84,10 @@
                   
 
 ### TODO FUNCATIONALITY
-        - message buttons
+        - message buttons (funcationality)
         - saving process
         - listings page
         - search bar (filters)
         - editing queries
-        - login / logout button
         - cards percisting with queries
-        - registration page.
 
