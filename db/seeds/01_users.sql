@@ -43,3 +43,6 @@ VALUES ('Maria', 'Lopez', 'Mlop', 'MariaL@hotmail.com', 'password', '905-305-756
 
 INSERT INTO users (name, last_name, username, email, password, phone_number, country, city, is_admin)
 VALUES ('Bob', 'Silva', 'bman', 'bobS@hotmail.com', 'password', '905-222-3333', 'Canada', 'toronto', true);
+
+INSERT INTO users (name, last_name, username, email, password, phone_number, country, city, is_admin)
+VALUES ('default', 'user', 'asdasd', 'asdasdadasd', 'passwordasdasd', '905-222-3333', 'Canada', 'toronto', true);
