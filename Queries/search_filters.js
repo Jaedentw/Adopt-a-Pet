@@ -14,30 +14,26 @@ const search = function(user_id, options) {
   }
 
   let queryParams = [userId];
-  console.log(queryParams);
   let queryText = `
   SELECT listings.*, users.username FROM listings
   JOIN users
   ON users.id = listings.breeder_id
-  JOIN favourites
-ONusers.id = favoutirerites.users_id
   WHERE breeder_id != $1
-  ANDfavourites.users_id!=$1
-  AND is_sold IS NOT true`;0
+  AND is_sold IS NOT true `;
 
   if (options.type) {
     queryParams.push(`%${options.type}%`);
-    queryText += `AND type LIKE $${queryParams.length} `;
+    queryText += `AND type LIKE lower($${queryParams.length}) `;
   }
 
   if (options.breed) {
     queryParams.push(`%${options.breed}%`);
-    queryText += `AND breed LIKE $${queryParams.length} `;
+    queryText += `AND breed LIKE lower($${queryParams.length}) `;
   }
 
   if (options.gender) {
     queryParams.push(`${options.gender}`);
-    queryText += `AND gender LIKE $${queryParams.length} `;
+    queryText += `AND gender LIKE lower($${queryParams.length}) `;
   }
 
   if (options.maxPrice) {
@@ -52,12 +48,12 @@ ONusers.id = favoutirerites.users_id
 
   if (options.city) {
     queryParams.push(`%${options.city}%`);
-    queryText += `AND city LIKE $${queryParams.length} `;
+    queryText += `AND city LIKE lower($${queryParams.length}) `;
   }
 
   if (options.country) {
     queryParams.push(`%${options.country}%`);
-    queryText += `AND country LIKE $${queryParams.length} `;
+    queryText += `AND country LIKE lower($${queryParams.length}) `;
   }
 
   queryText += `ORDER BY price;`;
@@ -65,8 +61,6 @@ ONusers.id = favoutirerites.users_id
   return pool
   .query (queryText, queryParams)
   .then ((result) => {
-    console.log('Queryparams: ',queryParams)
-    console.log('This is the query text: ',queryText);
     return result.rows;
   })
   .catch ((error) => {
@@ -75,6 +69,7 @@ ONusers.id = favoutirerites.users_id
 };
 
 exports.search = search;
+
 
 
 /*
