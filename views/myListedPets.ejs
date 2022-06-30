@@ -1,0 +1,63 @@
+<%// loop through the pets from our tempalateVars %>
+<% for (const pets in listings) { %>
+<div class="pet-container hover-shadow">
+    <div class="row">
+      <img src="<%=listings[pets].thumbnail_photo_url%>" class="image"></img>
+
+      <div class="column">
+
+      <div class="details-bar">
+
+        <span>
+          <%// output pet object data after each lable  %>
+          <p>Current Name: <%-listings[pets].name%> </p>
+
+          <p>Breeder: <%-listings[pets].breeder_id%></p>
+        </span>
+
+        <span>
+          <p>Type: <%-listings[pets].type%></p>
+          <p>Price: <%-listings[pets].price%></p>
+        </span>
+
+        <span>
+          <p>
+            Birthday: <%-listings[pets].birthday.toDateString()%>
+          </p>
+          <p>
+            Take home date: <%-listings[pets].ready_date.toDateString()%>
+          </p>
+        </span>
+
+      </div>
+
+      <div class="text">
+
+        <div class="row space-between">
+          <p>Coloring: <%-listings[pets].colour%></p>
+          <p>Gender:<%-listings[pets].gender%></p>
+          <p>Breed:<%-listings[pets].breed%></p>
+        </div>
+
+        <p>Description: <%-listings[pets].description%></p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="bottom-icons">
+
+    <span class="hover-red">
+      <i class="fa-solid fa-flag"></i>
+      Report
+    </span>
+
+
+
+  </div>
+
+</div>
+<% } %>
