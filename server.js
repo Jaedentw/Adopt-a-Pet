@@ -1,8 +1,9 @@
 // load .env data into process.env
 require("dotenv").config();
 const database = require('./database');
-const filter_db = require('./Queries/search_filters.js')
-const listings = require('./Queries/Jays_Queries.js')
+const filter_db = require('./Queries/search_filters.js');
+const listings = require('./Queries/Jays_Queries.js');
+const editing = require('./Queries/editing_query');
 
 // Web server config
 const PORT = process.env.PORT || 8080;
@@ -135,28 +136,6 @@ app.post("/register", (req, res) => {
   res.redirect("/");
 });
 
-// get for profile page
-app.get("/profile", (req, res) => {
-  const templateVars = {userID: req.session.userId, user: user, listings: listings};
-  res.render("profile-page",templateVars);
-});
-
-// post request for profile page
-app.post("/profile", (req, res) => {
-  res.render("register");
-});
-
-// get request for settings page
-app.get("/settings", (req, res) => {
-  const templateVars = {userID: req.session.userId, users: users};
-  res.render("settings",templateVars);
-});
-
-// post request for settings page
-app.post("/settings", (req, res) => {
-  res.render("settings");
-});
-
 
 // Post to logout
 app.get('/logout/:id', (req, res) => {
@@ -178,7 +157,6 @@ app.get("/listed-pets", (req, res) => {
   const id = req.session.userId;
   const user = database.getUserWihId(id)
   const listings_promise = listings.userListings(id)
-
   return Promise.all([user,listings_promise])
   .then( ([user,listings]) => {
     res.render("listed",{user,listings});
@@ -188,14 +166,55 @@ app.get("/listed-pets", (req, res) => {
 app.post("/listed-pets" , (req, res) => {
   const id = req.session.userId;
   const listing_id = req.body.listingId;
+  console.log('This is the pet ID: ',listing_id);
   const user = database.getUserWihId(id);
-  const listing = listings.listingById(listing_id);
+  const pet = listings.listingById(listing_id);
+  return Promise.all([user,pet])
+  .then ( ([user,listings]) => {
+    res.render("edit", {user,listings,listing_id});
 
-  return Promise.all([user,listing])
-  .then ( ([user,listing]) => {
-    console.log('This is the user',user);
-    console.log('this is the listing edit pet:',listing);
-    res.render("editPost", {user,listing});
+  });
+
+});
+
+
+app.post("/edit", (req, res) => {
+  console.log('Body:',req.body)
+  let petChange = {
+    name: req.body.pet_name,
+    type: req.body.type,
+    breed: req.body.breed,
+    gender: req.body.gender,
+    colour: req.body.colour,
+    price: req.body.price,
+    ready_date: req.body.ready_date,
+    is_sold: req.body.is_sold,
+    date_sold: req.body.date_sold,
+    description: req.body.description
+  }
+  Object.keys(petChange).forEach(key => {
+    if (petChange[key] === '') {
+      delete petChange[key];
+    }
+  });
+
+  if (petChange.is_sold === 'on'){
+    petChange.is_sold = true;
+  }
+  else {
+    petChange.is_sold = false;
+  }
+
+  const id = req.session.userId;
+  const listing_id = req.body.listingId;
+  const user = database.getUserWihId(id);
+  const listing = listings.userListings(id);
+  const update = editing.edit(id,listing_id,petChange);
+
+
+  return Promise.all([user,update,listing])
+  .then ( ([user,update,listings]) => {
+    res.redirect("/listed-pets");
 
   });
 
@@ -211,4 +230,3 @@ app.listen(PORT, () => {
 /*
 TEST FUNCTION
 */
-

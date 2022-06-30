@@ -31,7 +31,7 @@ const userListings = function(breeder_id) {
   JOIN users
   ON users.id = listings.breeder_id
   WHERE breeder_id = $1 AND is_sold = false
-  ORDER BY date_sold DESC;`;
+  ORDER BY listings.name DESC;`;
   return pool
   .query (sql, [breeder_id])
   .then ((result) => {
