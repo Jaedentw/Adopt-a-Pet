@@ -55,10 +55,16 @@
       Report
     </span>
 
+    <% if (user){ %>
     <span>
-      <i class="fa-solid fa-envelope hover-red"></i>
-      <i id="message" class="fa-solid fa-heart hover-red"></i>
+      <form action="/savedPet/<%=user.id%>" method="POST">
+        <input type="hidden" name="listing_id" value="<%=listings[pets].id%>"/>
+        <button type="submit">Save</button>
+        </form>
+
+      
     </span>
+    <% } %>
 
   </div>
 
