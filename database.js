@@ -11,7 +11,7 @@ const { Pool } = require('pg');
 // Creates the database pool
 const pool = new Pool({
   user: 'labber',
-  password: 'labber',
+  password: '123',
   host: 'localhost',
   database: 'midterm'
 });

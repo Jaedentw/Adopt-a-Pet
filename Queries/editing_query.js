@@ -2,7 +2,7 @@ const { Pool } = require('pg');
 
 const pool = new Pool({
   user: 'labber',
-  password: 'labber',
+  password: '123',
   host: 'localhost',
   database: 'midterm'
 });
@@ -17,17 +17,23 @@ const edit = function(user_id, pet_id, options) {
   let queryText = `UPDATE listings SET`
 
   if (options.name) {
+
     queryParams.push(`${options.name}`);
+
     queryText += `, name = $${queryParams.length}`;
   }
 
   if (options.type) {
+
     queryParams.push(`${options.type}`);
+
     queryText += `, type = $${queryParams.length}`;
   }
 
   if (options.breed) {
+
     queryParams.push(`${options.breed}`);
+
     queryText += `, breed = $${queryParams.length}`;
   }
 
@@ -37,7 +43,10 @@ const edit = function(user_id, pet_id, options) {
   }
 
   if (options.colour) {
+
     queryParams.push(`${options.colour}`);
+
+
     queryText += `, colour = $${queryParams.length}`;
   }
 
@@ -76,15 +85,15 @@ const edit = function(user_id, pet_id, options) {
     queryText += `, description = $${queryParams.length}`;
   }
 
+
   queryText = queryText.slice(0, 19) + queryText.slice(20);
   queryText += ` WHERE breeder_id = $1 AND listings.id = $2;`;
+
 
   return pool
   .query (queryText, queryParams)
   .then ((result) => {
-    console.log('This is the queryParams:',queryParams);
-    console.log('This is the queryText',queryText);
-    console.log('Result of result.rows:',result.rows)
+
     return result.rows;
   })
   .catch ((error) => {

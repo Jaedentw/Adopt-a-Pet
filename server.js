@@ -83,10 +83,8 @@ app.get("/", (req, res) => {
 
   return Promise.all([user,listings_promise])
   .then( ([user,listings]) => {
-    res.render("index",{user,listings});
+    res.render("featured",{user,listings});
   })
-
-
 
 });
 
@@ -112,8 +110,7 @@ app.post("/", (req, res) => {
 
   return Promise.all([user,filters])
   .then( ([user,listings]) => {
-    console.log('These are the filters: ', options)
-    res.render("index",{user,listings});
+    res.render("featured",{user,listings});
   })
 
 });
@@ -130,11 +127,6 @@ app.post("/savedPet/:id", (req, res) =>{
   });
 });
 
-// post request for register
-app.post("/register", (req, res) => {
-
-  res.redirect("/");
-});
 
 
 // Post to logout
@@ -219,6 +211,7 @@ app.post("/edit", (req, res) => {
   });
 
 });
+
 
 
 app.listen(PORT, () => {
