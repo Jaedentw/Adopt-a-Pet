@@ -150,7 +150,7 @@ app.get("/listed-pets", (req, res) => {
 
   return Promise.all([user,listings_promise])
   .then( ([user,listings]) => {
-    res.render("listed",{user,listings});
+    res.render("edit",{user,listings});
   })
 })
 
