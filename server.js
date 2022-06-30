@@ -151,7 +151,7 @@ app.get("/listed-pets", (req, res) => {
   const listings_promise = listings.userListings(id)
   return Promise.all([user,listings_promise])
   .then( ([user,listings]) => {
-    res.render("edit",{user,listings});
+    res.render("listed",{user,listings});
   })
 })
 
