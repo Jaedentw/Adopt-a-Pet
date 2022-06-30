@@ -8,16 +8,17 @@ const pool = new Pool({
 });
 
 const search = function(user_id, options) {
-  const queryParams = [user_id];
-  const queryText = `
+  let queryParams = [user_id];
+  let queryText = `
   SELECT listings.*, users.username FROM listings
   JOIN users
-  ON users.id = listings.owner_id
-  WHERE breeder_id IS NOT $1
+  ON users.id = listings.breeder_id
+  WHERE breeder_id != $1
   AND is_sold IS NOT true `;
 
   if (options.type) {
     queryParams.push(`%${options.type}%`);
+    console.log(options.type);
     queryText += `AND type LIKE $${queryParams.length} `;
   }
 
@@ -33,12 +34,12 @@ const search = function(user_id, options) {
 
   if (options.price) {
     queryParams.push(`%${options.price}%`);
-    queryText += `AND price LIKE $${queryParams.length} `;
+    queryText += `AND price = $${queryParams.length} `;
   }
 
   if (options.ready_date) {
     queryParams.push(`%${options.ready_date}%`);
-    queryText += `AND ready_date LIKE $${queryParams.length} `;
+    queryText += `AND ready_date = $${queryParams.length} `;
   }
 
   if (options.city) {

@@ -110,7 +110,7 @@ app.post("/", (req, res) => {
   return Promise.all([user,filters])
   .then( ([user,listings]) => {
     console.log('These are the filters: ', options)
-    res.render("index",{user,listings});
+    res.render("featured",{user,listings});
   })
 
 });
@@ -156,13 +156,13 @@ app.get("/listed-pets", (req, res) => {
   const listings_promise = listings.userListings(id)
 
   return Promise.all([user,listings_promise])
-  .then( ([user,listings_promise]) => {
-    res.render("listed",{user,listings_promise});
+  .then( ([user,listings]) => {
+    res.render("listed",{user,listings});
   })
 })
 
 app.post("/savepet", (req, res) => {
-  console.log(req.session);
+  console.log('this is the session', req.session);
   const user_id = req.session.userId;
   const pet_id = 0;
 
