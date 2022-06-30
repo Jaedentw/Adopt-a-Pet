@@ -1,4 +1,4 @@
-INSERT INTO favouries (users_id, listings_id)
+INSERT INTO favourites (users_id, listings_id)
 VALUES (4, 7);
 
 INSERT INTO favourites (users_id, listings_id)

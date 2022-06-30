@@ -82,10 +82,8 @@ app.get("/", (req, res) => {
 
   return Promise.all([user,listings_promise])
   .then( ([user,listings]) => {
-    res.render("index",{user,listings});
+    res.render("featured",{user,listings});
   })
-
-
 
 });
 
@@ -111,8 +109,7 @@ app.post("/", (req, res) => {
 
   return Promise.all([user,filters])
   .then( ([user,listings]) => {
-    console.log('These are the filters: ', options)
-    res.render("index",{user,listings});
+    res.render("featured",{user,listings});
   })
 
 });
@@ -127,34 +124,6 @@ app.post("/savedPet/:id", (req, res) =>{
   .then( ([user,listings]) => {
     res.render("index",{user,listings});
   });
-});
-
-// post request for register
-app.post("/register", (req, res) => {
-
-  res.redirect("/");
-});
-
-// get for profile page
-app.get("/profile", (req, res) => {
-  const templateVars = {userID: req.session.userId, user: user, listings: listings};
-  res.render("profile-page",templateVars);
-});
-
-// post request for profile page
-app.post("/profile", (req, res) => {
-  res.render("register");
-});
-
-// get request for settings page
-app.get("/settings", (req, res) => {
-  const templateVars = {userID: req.session.userId, users: users};
-  res.render("settings",templateVars);
-});
-
-// post request for settings page
-app.post("/settings", (req, res) => {
-  res.render("settings");
 });
 
 
@@ -185,6 +154,10 @@ app.get("/listed-pets", (req, res) => {
   })
 })
 
+//edit pet page
+app.get("/edit", (req, res) => {
+  res.render("edit");
+})
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
