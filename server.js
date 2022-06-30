@@ -126,23 +126,6 @@ app.post("/savedPet/:id", (req, res) =>{
   });
 });
 
-// post request for register
-app.post("/register", (req, res) => {
-
-  res.redirect("/");
-});
-
-// get for profile page
-app.get("/profile", (req, res) => {
-  const templateVars = {userID: req.session.userId, user: user, listings: listings};
-  res.render("profile-page",templateVars);
-});
-
-// post request for profile page
-app.post("/profile", (req, res) => {
-  res.render("register");
-});
-
 
 // Post to logout
 app.get('/logout/:id', (req, res) => {
@@ -171,7 +154,10 @@ app.get("/listed-pets", (req, res) => {
   })
 })
 
-
+//edit pet page
+app.get("/edit", (req, res) => {
+  res.render("edit");
+})
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
