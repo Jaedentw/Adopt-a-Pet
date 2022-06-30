@@ -12,7 +12,7 @@
           <%// output pet object data after each lable  %>
           <p>Current Name: <%-listings[pets].name%> </p>
 
-          <p>Breeder: <%-listings[pets].buyer_id%></p>
+          <p>Breeder: <%-listings[pets].breeder_id%></p>
         </span>
 
         <span>
@@ -22,10 +22,10 @@
 
         <span>
           <p>
-            <time>Birthday: <%-listings[pets].birthday%></time>
+            Birthday: <%-listings[pets].birthday.toDateString()%>
           </p>
           <p>
-            <time>Take home date: <%-listings[pets].ready_date%></time>
+            Take home date: <%-listings[pets].ready_date.toDateString()%>
           </p>
         </span>
 
@@ -61,6 +61,8 @@
         <input type="hidden" name="listing_id" value="<%=listings[pets].id%>"/>
         <button type="submit">Save</button>
         </form>
+
+      
     </span>
     <% } %>
 
