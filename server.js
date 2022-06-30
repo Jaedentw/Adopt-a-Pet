@@ -4,6 +4,7 @@ const database = require('./database');
 const filter_db = require('./Queries/search_filters.js');
 const listings = require('./Queries/Jays_Queries.js');
 const editing = require('./Queries/editing_query');
+const createPet = require('./Queries/create_pet');
 
 // Web server config
 const PORT = process.env.PORT || 8080;
@@ -51,6 +52,7 @@ app.use(express.static("public"));
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
 const { password, user } = require("pg/lib/defaults");
+const { create } = require("mocha/lib/suite");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -211,6 +213,59 @@ app.post("/edit", (req, res) => {
   });
 
 });
+
+
+
+app.get("/create/:id", (req, res) => {
+  const id = req.session.userId;
+  console.log('Userid create get: ',id);
+  const user = database.getUserWihId(id);
+
+  return Promise.all([user])
+  .then ( ([user]) => {
+    res.render("create",{user})
+  });
+
+});
+
+app.post("/create", (req, res) => {
+  const id = req.session.userId;
+  let addPet = {
+    name: req.body.pet_name,
+    type: req.body.type,
+    breed: req.body.breed,
+    gender: req.body.gender,
+    colour: req.body.colour,
+    price: req.body.price,
+    ready_date: req.body.ready_date,
+    is_sold: req.body.is_sold,
+    date_sold: req.body.date_sold,
+    description: req.body.description,
+    birthday: req.body.birthday,
+    thumbnail_photo_url: req.body.thumbnail_photo_url
+  }
+  Object.keys(addPet).forEach(key => {
+    if (addPet[key] === '') {
+      delete addPet[key];
+    }
+
+    if (addPet.is_sold === 'on'){
+      addPet.is_sold = true;
+    }
+    else {
+      addPet.is_sold = false;
+    }
+  });
+
+  const addNewPet = createPet.createNewPet(id,addPet)
+  return Promise.all([addNewPet])
+  .then ( ([addNewPet]) => {
+    res.redirect("/")
+  });
+
+});
+
+
 
 
 
