@@ -181,7 +181,6 @@ app.get("/listed-pets", (req, res) => {
 
   return Promise.all([user,listings_promise])
   .then( ([user,listings]) => {
-    console.log(listings);
     res.render("listed",{user,listings});
   })
 })

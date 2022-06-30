@@ -96,8 +96,9 @@ const usersFavourites = function(user_id) {
   WHERE favorites.users_id = $1
   AND is_sold IS NOT true;`;
   return pool
-  .query (sql, user_id)
+  .query (sql, [user_id])
   .then ((result) => {
+    console.log("This is the result.rows: ",result.rows);
     return result.rows;
   })
   .catch ((error) => {
