@@ -66,17 +66,15 @@ exports.soldAndOwner = soldAndOwner;
 
 //featured page of listings, same country and city
 //breeder_id IS NOT user_id --> to make sure we're not featuring the animals this user may be selling
-const featuredForUser = function(user_id, country, city) {
+const featuredForUser = function(user_id) {
   const sql = `
   SELECT listings.*, users.username FROM listings
   JOIN users
   ON users.id = listings.owner_id
   WHERE breeder_id IS NOT $1
-  AND is_sold IS NOT true
-  AND country = $2
-  AND city = $3;`;
+  AND is_sold IS NOT true`;
   return pool
-  .query (sql, [user_id, country, city])
+  .query (sql, [user_id])
   .then ((result) => {
     return result.rows;
   })
