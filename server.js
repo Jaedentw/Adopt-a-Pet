@@ -185,6 +185,22 @@ app.get("/listed-pets", (req, res) => {
   })
 })
 
+app.post("/listed-pets" , (req, res) => {
+  const id = req.session.userId;
+  const listing_id = req.body.listingId;
+  const user = database.getUserWihId(id);
+  const listing = listings.listingById(listing_id);
+
+  return Promise.all([user,listing])
+  .then ( ([user,listing]) => {
+    console.log('This is the user',user);
+    console.log('this is the listing edit pet:',listing);
+    res.render("editPost", {user,listing});
+
+  });
+
+});
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

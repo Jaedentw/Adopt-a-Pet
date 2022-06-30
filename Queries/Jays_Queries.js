@@ -187,8 +187,6 @@ const removeListing = function(user_id, listing_id) {
 exports.removeListing = removeListing;
 
 
-
-
 const getAllListings = function() {
   const sql = `SELECT * FROM listings;`;
   return pool
@@ -203,6 +201,25 @@ const getAllListings = function() {
 
 exports.getAllListings = getAllListings;
 
+
+//get listing by id
+const listingById = function(pet_id) {
+  const sql = `
+  SELECT listings.*, users.username FROM listings
+  JOIN users
+  ON users.id = listings.breeder_id
+  WHERE listings.id = $1`;
+  return pool
+  .query (sql, [pet_id])
+  .then ((result) => {
+    return result.rows;
+  })
+  .catch ((error) => {
+    console.log(error.message);
+  })
+};
+
+exports.listingById = listingById;
 
 /*
 --TEMPLATE--
