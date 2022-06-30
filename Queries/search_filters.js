@@ -20,10 +20,10 @@ const search = function(user_id, options) {
   JOIN users
   ON users.id = listings.breeder_id
   JOIN favourites
-ONusers.id =favoutirerites.users_id
+ONusers.id = favoutirerites.users_id
   WHERE breeder_id != $1
   ANDfavourites.users_id!=$1
-  AND is_sold IS NOT true`;
+  AND is_sold IS NOT true`;0
 
   if (options.type) {
     queryParams.push(`%${options.type}%`);
