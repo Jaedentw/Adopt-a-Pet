@@ -17,17 +17,23 @@ const edit = function(user_id, pet_id, options) {
   let queryText = `UPDATE listings SET`
 
   if (options.name) {
-    queryParams.push(`%${options.name}%`);
+
+    queryParams.push(`${options.name}`);
+
     queryText += `, name = $${queryParams.length}`;
   }
 
   if (options.type) {
-    queryParams.push(`%${options.type}%`);
+
+    queryParams.push(`${options.type}`);
+
     queryText += `, type = $${queryParams.length}`;
   }
 
   if (options.breed) {
-    queryParams.push(`%${options.breed}%`);
+
+    queryParams.push(`${options.breed}`);
+
     queryText += `, breed = $${queryParams.length}`;
   }
 
@@ -37,7 +43,10 @@ const edit = function(user_id, pet_id, options) {
   }
 
   if (options.colour) {
-    queryParams.push(`%${options.colour}%`);
+
+    queryParams.push(`${options.colour}`);
+
+
     queryText += `, colour = $${queryParams.length}`;
   }
 
@@ -76,19 +85,15 @@ const edit = function(user_id, pet_id, options) {
     queryText += `, description = $${queryParams.length}`;
   }
 
-  if (queryText[20] = `,`) {
-    queryText.substring(20);
-  }
 
-  if (!queryText[20]) {
-    return alert("Error: Please enter data to update this liting's information");
-  }
+  queryText = queryText.slice(0, 19) + queryText.slice(20);
+  queryText += ` WHERE breeder_id = $1 AND listings.id = $2;`;
 
-  queryText += `WHERE breeder_id = $1 AND id = $2`;
 
   return pool
   .query (queryText, queryParams)
   .then ((result) => {
+
     return result.rows;
   })
   .catch ((error) => {

@@ -13,7 +13,8 @@
 <body class="registration-body">
 
 
-  <form method="POST" action="/register" class="register">
+  <form method="POST" action="/edit" class ="register">
+
 
     <div class="reg-column">
       <span>
@@ -70,15 +71,17 @@
         <input type="text" id="date_sold" name="date_sold">
       </span>
 
-      <span class="reg-nb">
-
+      <span>
+        <label for="decription">Description:</label>
+        <input type="text" id="description" name="description">""
       </span>
 
     </div>
-
+    <input name="listingId" id="listingId" type="hidden" value="<%=listing_id%>"></input>
+<button type="submit" class="reg-button">Confirm changes</button>
   </form>
 
-  <button type="submit" class="reg-button">Register</button>
+
 
 
 </body>
