@@ -14,7 +14,6 @@ const search = function(user_id, options) {
   }
 
   let queryParams = [userId];
-  console.log(queryParams);
   let queryText = `
   SELECT listings.*, users.username FROM listings
   JOIN users
@@ -24,7 +23,6 @@ const search = function(user_id, options) {
 
   if (options.type) {
     queryParams.push(`%${options.type}%`);
-    console.log(options.type);
     queryText += `AND type LIKE lower($${queryParams.length}) `;
   }
 
@@ -63,8 +61,6 @@ const search = function(user_id, options) {
   return pool
   .query (queryText, queryParams)
   .then ((result) => {
-    console.log('Queryparams: ',queryParams)
-    console.log('This is the query text: ',queryText);
     return result.rows;
   })
   .catch ((error) => {

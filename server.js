@@ -109,7 +109,6 @@ app.post("/", (req, res) => {
 
   return Promise.all([user,filters])
   .then( ([user,listings]) => {
-    console.log('These are the filters: ', options)
     res.render("featured",{user,listings});
   })
 
