@@ -2,19 +2,28 @@ const { Pool } = require('pg');
 
 const pool = new Pool({
   user: 'labber',
-  password: '123',
+  password: 'labber',
   host: 'localhost',
   database: 'midterm'
 });
 
 const search = function(user_id, options) {
-  let queryParams = [user_id];
+  let userId = 16; // MAKE SURE USERID IS AT 'DEFAULT' user user's ID;
+  if (user_id != null){
+    userId = user_id;
+  }
+
+  let queryParams = [userId];
+  console.log(queryParams);
   let queryText = `
   SELECT listings.*, users.username FROM listings
   JOIN users
   ON users.id = listings.breeder_id
+  JOIN favourites
+  ON users.id =favoutirerites.users_id
   WHERE breeder_id != $1
-  AND is_sold IS NOT true `;
+  ANDfavourites.users_id!=$1
+  AND is_sold IS NOT true`;
 
   if (options.type) {
     queryParams.push(`%${options.type}%`);
@@ -28,18 +37,18 @@ const search = function(user_id, options) {
   }
 
   if (options.gender) {
-    queryParams.push(`%${options.gender}%`);
+    queryParams.push(`${options.gender}`);
     queryText += `AND gender LIKE $${queryParams.length} `;
   }
 
-  if (options.price) {
-    queryParams.push(`%${options.price}%`);
-    queryText += `AND price = $${queryParams.length} `;
+  if (options.maxPrice) {
+    queryParams.push(`${options.maxPrice}`);
+    queryText += `AND price <= $${queryParams.length} `;
   }
 
-  if (options.ready_date) {
-    queryParams.push(`%${options.ready_date}%`);
-    queryText += `AND ready_date = $${queryParams.length} `;
+  if (options.minPrice) {
+    queryParams.push(`${options.minPrice}`);
+    queryText += `AND price >= $${queryParams.length} `;
   }
 
   if (options.city) {
@@ -52,9 +61,13 @@ const search = function(user_id, options) {
     queryText += `AND country LIKE $${queryParams.length} `;
   }
 
+  queryText += `ORDER BY price;`;
+
   return pool
   .query (queryText, queryParams)
   .then ((result) => {
+    console.log('Queryparams: ',queryParams)
+    console.log('This is the query text: ',queryText);
     return result.rows;
   })
   .catch ((error) => {

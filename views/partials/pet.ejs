@@ -22,10 +22,10 @@
 
         <span>
           <p>
-            <time>Birthday: <%-listings[pets].birthday%></time>
+            Birthday: <%-listings[pets].birthday.toDateString()%>
           </p>
           <p>
-            <time>Take home date: <%-listings[pets].ready_date%></time>
+            Take home date: <%-listings[pets].ready_date.toDateString()%>
           </p>
         </span>
 
@@ -55,12 +55,16 @@
       Report
     </span>
 
+    <% if (user){ %>
     <span>
-      <form method="POST" action="/savepet">
-        <button type="button" id="savepet" name="savepet">Save</button>
-      </form>
-      <i class="fa-solid fa-heart hover-red"></i>
+      <form action="/savedPet/<%=user.id%>" method="POST">
+        <input type="hidden" name="listing_id" value="<%=listings[pets].id%>"/>
+        <button type="submit">Save</button>
+        </form>
+
+
     </span>
+    <% } %>
 
   </div>
 

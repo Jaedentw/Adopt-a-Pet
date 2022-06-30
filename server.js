@@ -1,7 +1,7 @@
 // load .env data into process.env
 require("dotenv").config();
 const database = require('./database');
-const search = require('./Queries/search_filters.js')
+const filter_db = require('./Queries/search_filters.js')
 const listings = require('./Queries/Jays_Queries.js')
 
 // Web server config
@@ -88,24 +88,24 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-  const options = {
+  let options = {
     country: req.body.country,
     city: req.body.city,
     type: req.body.type,
     breed: req.body.breed,
     gender: req.body.gender,
-    price: req.body.price,
-    ready_date: req.body.ready_date
-
+    maxPrice: req.body.maxPrice,
+    minPrice: req.body.minPrice
   }
   Object.keys(options).forEach(key => {
     if (options[key] === '') {
       delete options[key];
     }
   });
+
   const id = req.session.userId;
   const user = database.getUserWihId(id)
-  const filters = search.search(id,options);
+  const filters = filter_db.search(id,options);
 
   return Promise.all([user,filters])
   .then( ([user,listings]) => {
@@ -116,6 +116,17 @@ app.post("/", (req, res) => {
 });
 
 
+app.post("/savedPet/:id", (req, res) =>{
+  const id = req.session.userId;
+  const user = database.getUserWihId(id)
+  const listings_promise = listings.getAllListings()
+
+  return Promise.all([user,listings_promise])
+  .then( ([user,listings]) => {
+    res.render("index",{user,listings});
+  });
+});
+
 // post request for register
 app.post("/register", (req, res) => {
 
@@ -124,7 +135,7 @@ app.post("/register", (req, res) => {
 
 // get for profile page
 app.get("/profile", (req, res) => {
-  const templateVars = {userID: req.session.userId, user: user};
+  const templateVars = {userID: req.session.userId, user: user, listings: listings};
   res.render("profile-page",templateVars);
 });
 
@@ -145,7 +156,7 @@ app.get('/logout/:id', (req, res) => {
 
 //get sold pets
 app.get("/sold-pets", (req, res) => {
-  const templateVars = {userID: req.session.userId, user: database.user};
+  const templateVars = {userID: req.session.userId, user: user};
   res.render("sold", templateVars);
 });
 
@@ -161,12 +172,7 @@ app.get("/listed-pets", (req, res) => {
   })
 })
 
-app.post("/savepet", (req, res) => {
-  console.log('this is the session', req.session);
-  const user_id = req.session.userId;
-  const pet_id = 0;
 
-})
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
