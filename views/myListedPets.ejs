@@ -12,7 +12,7 @@
           <%// output pet object data after each lable  %>
           <p>Current Name: <%-listings[pets].name%> </p>
 
-          <p>Breeder: <%-listings[pets].breeder_id%></p>
+          <p>Breeder: <%-user.username%></p>
         </span>
 
         <span>
@@ -60,9 +60,7 @@
       <input name="listingId" type="hidden" value="<%=listings[pets].id%>"></input>
       <button type="submit">Edit</button>
       </form>
-    <span class="checkBox">
 
-    </span>
 
   </div>
 
