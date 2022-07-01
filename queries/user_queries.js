@@ -44,7 +44,7 @@ exports.getUserWithUsername = getUserWithUsername;
 
 
 // Search Query for user with specific ID;
-const getUserWihId = (id) => {
+const getUserWithId = (id) => {
   const search = `SELECT * FROM users WHERE id = $1;`;
   return pool
     .query(search, [id])
@@ -56,7 +56,7 @@ const getUserWihId = (id) => {
       console.log(err.message);
     });
 };
-exports.getUserWihId = getUserWihId;
+exports.getUserWithId = getUserWithId;
 
 
 // Adds a user to the database;

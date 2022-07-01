@@ -39,4 +39,21 @@
   margin-bottom: 10px;
 }
 
+.listed-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.listed-btn {
+  background-color: #333;
+  border-radius: 6px;
+  padding: 10px;
+  color: white;
+  font-family: 'Allan';
+  font-size: larger;
+}
+
 
