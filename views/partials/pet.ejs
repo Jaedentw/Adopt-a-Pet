@@ -47,6 +47,20 @@
 
   </div>
 
+  <div class="message-container">
+    <button class="fa-solid fa-envelope hover-red" id="button"></button>
+  </div>
+
+
+  <div class="popup">
+    <div class="popup-content">
+      <form class="sms" method="POST" action="/sms">
+      <input name="text" id="text-box" type="text" placeholder="send message">
+      <button type="submit" id="button-send">send</button>
+    </form>
+      <button class="close">x</button>
+    </div>
+  </div>
 
   <div class="bottom-icons">
 
@@ -55,10 +69,7 @@
       Report
     </span>
 
-    <span>
-      <i class="fa-solid fa-envelope hover-red"></i>
-      <i id="message" class="fa-solid fa-heart hover-red"></i>
-    </span>
+    <i class="fa-solid fa-heart hover-red"></i>
 
   </div>
 
