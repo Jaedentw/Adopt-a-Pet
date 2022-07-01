@@ -13,15 +13,14 @@ const pool = new Pool({
 const getAllUsers = () => {
   const search = `SELECT * FROM users;`;
   return pool
-  .query(search)
-  .then((result) => {
-    return result.rows;
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
+    .query(search)
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
-
 
 exports.getAllUsers = getAllUsers;
 
@@ -57,6 +56,8 @@ const getUserWihId = (id) => {
       console.log(err.message);
     });
 };
+exports.getUserWihId = getUserWihId;
+
 
 // Adds a user to the database;
 const addUser =  function(user) {
@@ -67,14 +68,14 @@ const addUser =  function(user) {
   RETURNING *
   `;
   return pool
-  .query(search,
-  [user.name, user.lastname, user.username, user.email, user.password, user.phone_number, user.country, user.city])
-  .then((result) => {
-   return result.rows[0];
-  })
-  .catch((err) => {
-   console.log(err.message);
-  });
- }
- exports.addUser = addUser;
- exports.getUserWihId = getUserWihId;
+    .query(search,
+      [user.name, user.lastname, user.username, user.email, user.password, user.phone_number, user.country, user.city])
+    .then((result) => {
+      return result.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+exports.addUser = addUser;
+

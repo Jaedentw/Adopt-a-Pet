@@ -16,13 +16,13 @@ const userListings = function(breeder_id) {
   WHERE breeder_id = $1 AND is_sold = false
   ORDER BY listings.name DESC;`;
   return pool
-  .query (sql, [breeder_id])
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(sql, [breeder_id])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.userListings = userListings;
@@ -34,13 +34,13 @@ const soldListings = function(breeder_id) {
   WHERE breeder_id = $1 AND is_sold = true
   ORDER BY date_sold DESC;`;
   return pool
-  .query (sql, [breeder_id])
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(sql, [breeder_id])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.soldListings = soldListings;
@@ -55,13 +55,13 @@ const featuredForUser = function(user_id) {
   WHERE breeder_id IS NOT $1
   AND is_sold IS NOT true`;
   return pool
-  .query (sql, [user_id])
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(sql, [user_id])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.featuredForUser = featuredForUser;
@@ -77,14 +77,14 @@ const usersFavourites = function(user_id) {
   WHERE favorites.users_id = $1
   AND is_sold IS NOT true;`;
   return pool
-  .query (sql, [user_id])
-  .then ((result) => {
-    console.log("This is the result.rows: ",result.rows);
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(sql, [user_id])
+    .then((result) => {
+      console.log("This is the result.rows: ",result.rows);
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.usersFavourites = usersFavourites;
@@ -98,13 +98,13 @@ const addToFavourites = function(user_id, listings_id) {
   VALUES ($1, $2)
   RETURNING *;`;
   return pool
-  .query (sql, [user_id, listings_id])
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(sql, [user_id, listings_id])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.addToFavourites = addToFavourites;
@@ -116,13 +116,13 @@ const removeFromFavourites = function(user_id, listing_id) {
   WHERE users_id = $1 AND listings_id = $2
   RETURNING *;`;
   return pool
-  .query (sql, [user_id, listing_id])
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(sql, [user_id, listing_id])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.removeFromFavourites = removeFromFavourites;
@@ -134,13 +134,13 @@ const removeListing = function(user_id, listing_id) {
   WHERE breeder_id = $1 AND id = $2
   RETURNING *`;
   return pool
-  .query (sql, [user_id, listing_id])
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(sql, [user_id, listing_id])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.removeListing = removeListing;
@@ -149,13 +149,13 @@ exports.removeListing = removeListing;
 const getAllListings = function() {
   const sql = `SELECT * FROM listings;`;
   return pool
-  .query (sql)
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(sql)
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.getAllListings = getAllListings;
@@ -169,13 +169,13 @@ const listingById = function(pet_id) {
   ON users.id = listings.breeder_id
   WHERE listings.id = $1`;
   return pool
-  .query (sql, [pet_id])
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(sql, [pet_id])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.listingById = listingById;
