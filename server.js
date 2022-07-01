@@ -125,8 +125,6 @@ app.post("/savedPet/:id", (req, res) =>{
   });
 });
 
-
-
 // Post to logout
 app.get('/logout/:id', (req, res) => {
   req.session.userId = null;
@@ -224,6 +222,7 @@ app.post("/create", (req, res) => {
     birthday: req.body.birthday,
     thumbnail_photo_url: req.body.thumbnail_photo_url
   }
+
   Object.keys(addPet).forEach(key => {
     if (addPet[key] === '') {
       delete addPet[key];
