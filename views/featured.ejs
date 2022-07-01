@@ -50,9 +50,17 @@
 
   <div class="side-buttons">
     <% if (user){ %>
-    <button class="hover-shadow search-button"><i class="fa-solid fa-heart"></i>   My Favourites</button>
-    <button class="hover-shadow search-button"><i class="fa-solid fa-map-pin"></i>   Near Me</button>
-    <button class="hover-shadow search-button"><i class="fa-solid fa-list"></i>   My Listings</button>
+    <form method="POST" action="/favorites">
+      <button class="hover-shadow search-button"><i class="fa-solid fa-heart"></i>   My Favourites</button>
+    </form>
+
+    <form method="POST" action="/search-listings">
+      <button class="hover-shadow search-button"><i class="fa-solid fa-list"></i>   My Listings</button>
+    </form>
+
+    <form method="POST" action="/sold-listings">
+      <button class="hover-shadow search-button"><i class="fa-solid fa-list-check"></i>   My Sold Listings</button>
+    </form>
     <% } %>
   </div>
 </body>

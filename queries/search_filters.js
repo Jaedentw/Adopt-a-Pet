@@ -9,7 +9,7 @@ const pool = new Pool({
 
 const search = function(user_id, options) {
   let userId = 16; // MAKE SURE USERID IS AT 'DEFAULT' user user's ID;
-  if (user_id != null){
+  if (user_id !== null) {
     userId = user_id;
   }
 
@@ -59,13 +59,13 @@ const search = function(user_id, options) {
   queryText += `ORDER BY price;`;
 
   return pool
-  .query (queryText, queryParams)
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(queryText, queryParams)
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.search = search;

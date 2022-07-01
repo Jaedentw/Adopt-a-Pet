@@ -9,12 +9,12 @@ const pool = new Pool({
 
 const edit = function(user_id, pet_id, options) {
   let userId = 16; // MAKE SURE USERID IS AT 'DEFAULT' user user's ID;
-  if (user_id != null){
+  if (user_id !== null) {
     userId = user_id;
   }
 
   let queryParams = [userId, pet_id];
-  let queryText = `UPDATE listings SET`
+  let queryText = `UPDATE listings SET`;
 
   if (options.name) {
 
@@ -91,14 +91,14 @@ const edit = function(user_id, pet_id, options) {
 
 
   return pool
-  .query (queryText, queryParams)
-  .then ((result) => {
+    .query(queryText, queryParams)
+    .then((result) => {
 
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.edit = edit;

@@ -3,7 +3,7 @@
 
 <head>
 
-  <title>Registration</title>
+  <title>Create New Listing</title>
 
   <%- include('partials/head.ejs'); %>
 
@@ -12,81 +12,89 @@
 
 <body class="registration-body">
 
+  <main class="inputs-container">
 
-  <form method="POST" action="/create" class ="register">
-
-
-    <div class="reg-column">
-      <span>
-        <label for="pet_name">Name:</label>
-        <input type="text" id="pet_name" name="pet_name">
-      </span>
-
-      <span>
-        <label for="type">Type:</label>
-        <input type="text" id="type" name="type">
-      </span>
-
-      <span>
-        <label for="breed">Breed:</label>
-        <input type="text" id="breed" name="breed">
-      </span>
-
-      <span>
-        <label for="gender">Gender:</label>
-        <input type="text" id="gender" name="gender">
-      </span>
-
-      <span>
-        <label for="colour">Colour:</label>
-        <input type="text" id="colour" name="colour">
-      </span>
-
-      <span>
-        <label for="thumbnail_photo_url">Thumbnail URL:</label>
-        <input type="text" id="thumbnail_photo_url" name="thumbnail_photo_url">
-      </span>
+    <div class="span-title">
+      Create New Listing
     </div>
 
+    <form method="POST" action="/create" class ="register">
 
-    <div class="reg-column">
+      <div class="inputs">
+        <div class="reg-column">
+          <span>
+            <label for="pet_name">Name:</label>
+            <input type="text" id="pet_name" name="pet_name">
+          </span>
 
-      <span>
-        <label for="price">Price:</label>
-        <input type="text" id="price" name="price">
-      </span>
+          <span>
+            <label for="type">Type:</label>
+            <input type="text" id="type" name="type">
+          </span>
 
-      <span>
-        <label for="ready_date">Take Home Date:</label>
-        <input type="text" id="ready_date" name="ready_date">
-      </span>
+          <span>
+            <label for="breed">Breed:</label>
+            <input type="text" id="breed" name="breed">
+          </span>
 
-      <span>
-        <label for="is_sold">Sold:</label>
-        <input type="checkbox" id="is_sold" name="is_sold" class="reg-nb">
-      </span>
+          <span>
+            <label for="gender">Gender:</label>
+            <input type="text" id="gender" name="gender">
+          </span>
 
-      <span>
-        <label for="date_sold">Date Sold:</label>
-        <input type="text" id="date_sold" name="date_sold">
-      </span>
+          <span>
+            <label for="colour">Colour:</label>
+            <input type="text" id="colour" name="colour">
+          </span>
 
-      <span>
-        <label for="date_sold">Birthday:</label>
-        <input type="text" id="birthday" name="birthday">
-      </span>
-
-      <span>
-        <label for="decription">Description:</label>
-        <input type="text" id="description" name="description">""
-      </span>
-
-    </div>
-
-<button type="submit" class="reg-button">Confirm changes</button>
-  </form>
+          <span>
+            <label for="thumbnail_photo_url">Thumbnail URL:</label>
+            <input type="text" id="thumbnail_photo_url" name="thumbnail_photo_url">
+          </span>
+        </div>
 
 
+        <div class="reg-column">
+
+          <span>
+            <label for="price">Price:</label>
+            <input type="text" id="price" name="price">
+          </span>
+
+          <span>
+            <label for="ready_date">Take Home Date:</label>
+            <input type="text" id="ready_date" name="ready_date">
+          </span>
+
+          <span class="reg-nb">
+            <label for="is_sold">Sold:</label>
+            <input type="checkbox" id="is_sold" name="is_sold" class="reg-check">
+          </span>
+
+          <span>
+            <label for="date_sold">Date Sold:</label>
+            <input type="text" id="date_sold" name="date_sold">
+          </span>
+
+          <span>
+            <label for="date_sold">Birthday:</label>
+            <input type="text" id="birthday" name="birthday">
+          </span>
+
+          <span class="reg-nb">
+            <label for="decription">Description:</label>
+            <textarea id="description" name="description" wrap="soft" class="description"></textarea>
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <button type="submit" class="reg-button hover-shadow">Create Listing</button>
+
+    </form>
+  </main>
 
 
 </body>

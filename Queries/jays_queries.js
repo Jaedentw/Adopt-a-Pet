@@ -7,23 +7,6 @@ const pool = new Pool({
   database: 'midterm'
 });
 
-//user profile information
-const getUserProfile = function(user_id) {
-  const sql = `
-  SELECT name, last_name, username, email, country, city, bio FROM users
-  WHERE id = $1;`;
-  return pool
-  .query (sql, user_id)
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
-};
-
-exports.getUserProfile = getUserProfile;
-
 //All of a breeder's active listings
 const userListings = function(breeder_id) {
   const sql = `
@@ -33,36 +16,34 @@ const userListings = function(breeder_id) {
   WHERE breeder_id = $1 AND is_sold = false
   ORDER BY listings.name DESC;`;
   return pool
-  .query (sql, [breeder_id])
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(sql, [breeder_id])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.userListings = userListings;
 
-//All of a breeders sold listings and their owners
-const soldAndOwner = function(breeder_id) {
+//All of a breeders sold listings
+const soldListings = function(breeder_id) {
   const sql = `
-  SELECT users.*, listings.* FROM listings
-  JOIN users
-  ON users.id = listings.owner_id
+  SELECT listings.* FROM listings
   WHERE breeder_id = $1 AND is_sold = true
   ORDER BY date_sold DESC;`;
   return pool
-  .query (sql, [breeder_id])
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(sql, [breeder_id])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
-exports.soldAndOwner = soldAndOwner;
+exports.soldListings = soldListings;
 
 //featured page of listings, same country and city
 //breeder_id IS NOT user_id --> to make sure we're not featuring the animals this user may be selling
@@ -70,17 +51,17 @@ const featuredForUser = function(user_id) {
   const sql = `
   SELECT listings.*, users.username FROM listings
   JOIN users
-  ON users.id = listings.owner_id
+  ON users.id = listings.breeder_id
   WHERE breeder_id IS NOT $1
   AND is_sold IS NOT true`;
   return pool
-  .query (sql, [user_id])
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(sql, [user_id])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.featuredForUser = featuredForUser;
@@ -90,45 +71,23 @@ const usersFavourites = function(user_id) {
   const sql = `
   SELECT listings.*, users.username FROM listings
   JOIN users
-  ON users.id = listings.owner_id
+  ON users.id = listings.breeder_id
   JOIN favourites
   ON listings.id = favorites.listings_id
   WHERE favorites.users_id = $1
   AND is_sold IS NOT true;`;
   return pool
-  .query (sql, [user_id])
-  .then ((result) => {
-    console.log("This is the result.rows: ",result.rows);
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(sql, [user_id])
+    .then((result) => {
+      console.log("This is the result.rows: ",result.rows);
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.usersFavourites = usersFavourites;
-
-//shows user favourites
-const soldFavourites = function(user_id) {
-  const sql = `
-  SELECT listings.*, users.username FROM listings
-  JOIN users
-  ON users.id = listings.owner_id
-  JOIN favourites
-  ON listings.id = favorites.listings_id
-  WHERE favorites.users_id = $1
-  AND is_sold IS true;`;
-  return pool
-  .query (sql, user_id)
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
-};
-
-exports.soldFavourites = soldFavourites;
 
 //utility queries
 
@@ -139,13 +98,13 @@ const addToFavourites = function(user_id, listings_id) {
   VALUES ($1, $2)
   RETURNING *;`;
   return pool
-  .query (sql, [user_id, listings_id])
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(sql, [user_id, listings_id])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.addToFavourites = addToFavourites;
@@ -157,13 +116,13 @@ const removeFromFavourites = function(user_id, listing_id) {
   WHERE users_id = $1 AND listings_id = $2
   RETURNING *;`;
   return pool
-  .query (sql, [user_id, listing_id])
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(sql, [user_id, listing_id])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.removeFromFavourites = removeFromFavourites;
@@ -175,28 +134,28 @@ const removeListing = function(user_id, listing_id) {
   WHERE breeder_id = $1 AND id = $2
   RETURNING *`;
   return pool
-  .query (sql, [user_id, listing_id])
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(sql, [user_id, listing_id])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.removeListing = removeListing;
 
-
+//all listings
 const getAllListings = function() {
   const sql = `SELECT * FROM listings;`;
   return pool
-  .query (sql)
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(sql)
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.getAllListings = getAllListings;
@@ -210,13 +169,13 @@ const listingById = function(pet_id) {
   ON users.id = listings.breeder_id
   WHERE listings.id = $1`;
   return pool
-  .query (sql, [pet_id])
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
+    .query(sql, [pet_id])
+    .then((result) => {
+      return result.rows;
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 };
 
 exports.listingById = listingById;
