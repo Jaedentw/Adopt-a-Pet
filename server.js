@@ -1,10 +1,10 @@
 // load .env data into process.env
 require("dotenv").config();
-const database = require('.Queries/user_queries.js');
-const filter_db = require('./Queries/search_filters.js.js');
-const listings = require('./Queries/jays_queries.js');
-const editing = require('./Queries/editing_query.js');
-const createPet = require('./Queries/create_pet.js');
+const database = require('./queries/user_queries.js');
+const filter_db = require('./queries/search_filters.js');
+const listings = require('./queries/jays_queries.js');
+const editing = require('./queries/editing_query.js');
+const createPet = require('./queries/create_pet.js');
 
 // Web server config
 const PORT = process.env.PORT || 8080;
@@ -131,7 +131,7 @@ app.get('/logout/:id', (req, res) => {
   res.redirect("/");
 });
 
-//listed pets
+//listed pets search
 app.get("/listed-pets", (req, res) => {
   const id = req.session.userId;
   const user = database.getUserWihId(id)
@@ -142,7 +142,7 @@ app.get("/listed-pets", (req, res) => {
   })
 })
 
-//search post from listd-pets
+//edit button listed-pets
 app.post("/listed-pets" , (req, res) => {
   const id = req.session.userId;
   const listing_id = req.body.listingId;
@@ -246,3 +246,35 @@ app.post("/create", (req, res) => {
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
+
+//search page side buttons
+
+app.post("/favourites",(req, res) => {
+  const id = req.session.userId;
+  const user = database.getUserWihId(id)
+  const listings_promise = listings.userListings(id)
+  return Promise.all([user,listings_promise])
+  .then( ([user,listings]) => {
+    res.render("listed",{user,listings});
+  })
+})
+
+app.post("/search-listings",(req, res) => {
+  const id = req.session.userId;
+  const user = database.getUserWihId(id)
+  const listings_promise = listings.userListings(id)
+  return Promise.all([user,listings_promise])
+  .then( ([user,listings]) => {
+    res.render("listed",{user,listings});
+  })
+})
+
+app.post("/sold-listings",(req, res) => {
+  const id = req.session.userId;
+  const user = database.getUserWihId(id)
+  const listings_promise = listings.userListings(id)
+  return Promise.all([user,listings_promise])
+  .then( ([user,listings]) => {
+    res.render("listed",{user,listings});
+  })
+})
