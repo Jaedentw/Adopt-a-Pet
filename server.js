@@ -65,8 +65,7 @@ app.use("/api/users", usersRoutes(db));
 
 
 // ---------------------------------------------
-// functions
-
+//log functions
 
 //login
 app.get('/login/:id', (req, res) => {
@@ -74,21 +73,54 @@ app.get('/login/:id', (req, res) => {
   res.redirect("/");
 });
 
-//featured/search page
+// Post to logout
+app.get('/logout/:id', (req, res) => {
+  req.session.userId = null;
+  res.redirect("/");
+});
+
+//------------------------------------------------
+//page gets
+
+//featured page
 app.get("/", (req, res) => {
   const id = req.session.userId;
-  const user = database.getUserWihId(id)
-  const listings_promise = listings.getAllListings()
-
+  const user = database.getUserWithId(id);
+  const listings_promise = listings.getAllListings();
   return Promise.all([user,listings_promise])
   .then( ([user,listings]) => {
     res.render("featured",{user,listings});
-  })
+  });
 });
 
-//featured/search page post
+//listed pets
+app.get("/listed-pets", (req, res) => {
+  const id = req.session.userId;
+  const user = database.getUserWithId(id)
+  const listings_promise = listings.userListings(id)
+  return Promise.all([user,listings_promise])
+  .then( ([user,listings]) => {
+    res.render("listed",{user,listings});
+  })
+})
+
+//create page
+app.get("/create/:id", (req, res) => {
+  const id = req.session.userId;
+  const user = database.getUserWithId(id);
+  return Promise.all([user])
+  .then ( ([user]) => {
+    res.render("create",{user})
+  });
+});
+
+//----------------------------------------------
+//Featured Page - POSTs
+
+//filter search button
 app.post("/", (req, res) => {
   let options = {
+    favourites: req.body.favourites,
     country: req.body.country,
     city: req.body.city,
     type: req.body.type,
@@ -102,21 +134,31 @@ app.post("/", (req, res) => {
       delete options[key];
     }
   });
-
   const id = req.session.userId;
-  const user = database.getUserWihId(id)
+  const user = database.getUserWithId(id)
   const filters = filter_db.search(id,options);
-
-  return Promise.all([user,filters])
+  return Promise.all([user, filters])
   .then( ([user,listings]) => {
-    res.render("featured",{user,listings});
+    res.render("featured",{user, listings});
   })
 });
 
-//?
+//My favourites button
+
+
+//My listings button
+
+
+//My sold listings button
+
+
+//-----------------------------------------------
+//Listed, edit and create page
+
+//Save pet button - unknown if functional
 app.post("/savedPet/:id", (req, res) =>{
   const id = req.session.userId;
-  const user = database.getUserWihId(id)
+  const user = database.getUserWithId(id)
   const listings_promise = listings.getAllListings()
 
   return Promise.all([user,listings_promise])
@@ -125,28 +167,11 @@ app.post("/savedPet/:id", (req, res) =>{
   });
 });
 
-// Post to logout
-app.get('/logout/:id', (req, res) => {
-  req.session.userId = null;
-  res.redirect("/");
-});
-
-//listed pets search
-app.get("/listed-pets", (req, res) => {
-  const id = req.session.userId;
-  const user = database.getUserWihId(id)
-  const listings_promise = listings.userListings(id)
-  return Promise.all([user,listings_promise])
-  .then( ([user,listings]) => {
-    res.render("listed",{user,listings});
-  })
-})
-
-//edit button listed-pets
+//Edit button - listed page
 app.post("/listed-pets" , (req, res) => {
   const id = req.session.userId;
   const listing_id = req.body.listingId;
-  const user = database.getUserWihId(id);
+  const user = database.getUserWithId(id);
   const pet = listings.listingById(listing_id);
   return Promise.all([user,pet])
   .then ( ([user,listings]) => {
@@ -154,7 +179,7 @@ app.post("/listed-pets" , (req, res) => {
   });
 });
 
-//submit edit post
+//Submit button - edit page
 app.post("/edit", (req, res) => {
   let petChange = {
     name: req.body.pet_name,
@@ -168,44 +193,29 @@ app.post("/edit", (req, res) => {
     date_sold: req.body.date_sold,
     description: req.body.description
   }
-
   Object.keys(petChange).forEach(key => {
     if (petChange[key] === '') {
       delete petChange[key];
     }
   });
-
   if (petChange.is_sold === 'on'){
     petChange.is_sold = true;
   }
   else {
     petChange.is_sold = false;
   }
-
   const id = req.session.userId;
   const listing_id = req.body.listingId;
-  const user = database.getUserWihId(id);
+  const user = database.getUserWithId(id);
   const listing = listings.userListings(id);
   const update = editing.edit(id,listing_id,petChange);
-
   return Promise.all([user,update,listing])
   .then ( ([user,update,listings]) => {
     res.redirect("/listed-pets");
   });
 });
 
-//create page
-app.get("/create/:id", (req, res) => {
-  const id = req.session.userId;
-  const user = database.getUserWihId(id);
-
-  return Promise.all([user])
-  .then ( ([user]) => {
-    res.render("create",{user})
-  });
-});
-
-//create button post
+//Create button - listed page
 app.post("/create", (req, res) => {
   const id = req.session.userId;
   let addPet = {
@@ -222,7 +232,6 @@ app.post("/create", (req, res) => {
     birthday: req.body.birthday,
     thumbnail_photo_url: req.body.thumbnail_photo_url
   }
-
   Object.keys(addPet).forEach(key => {
     if (addPet[key] === '') {
       delete addPet[key];
@@ -234,7 +243,6 @@ app.post("/create", (req, res) => {
       addPet.is_sold = false;
     }
   });
-
   const addNewPet = createPet.createNewPet(id,addPet)
   return Promise.all([addNewPet])
   .then ( ([addNewPet]) => {
@@ -242,39 +250,7 @@ app.post("/create", (req, res) => {
   });
 });
 
-//list on port
+//listen on port
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
-
-//search page side buttons
-
-app.post("/favourites",(req, res) => {
-  const id = req.session.userId;
-  const user = database.getUserWihId(id)
-  const listings_promise = listings.userListings(id)
-  return Promise.all([user,listings_promise])
-  .then( ([user,listings]) => {
-    res.render("listed",{user,listings});
-  })
-})
-
-app.post("/search-listings",(req, res) => {
-  const id = req.session.userId;
-  const user = database.getUserWihId(id)
-  const listings_promise = listings.userListings(id)
-  return Promise.all([user,listings_promise])
-  .then( ([user,listings]) => {
-    res.render("listed",{user,listings});
-  })
-})
-
-app.post("/sold-listings",(req, res) => {
-  const id = req.session.userId;
-  const user = database.getUserWihId(id)
-  const listings_promise = listings.userListings(id)
-  return Promise.all([user,listings_promise])
-  .then( ([user,listings]) => {
-    res.render("listed",{user,listings});
-  })
-})

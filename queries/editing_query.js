@@ -17,23 +17,17 @@ const edit = function(user_id, pet_id, options) {
   let queryText = `UPDATE listings SET`;
 
   if (options.name) {
-
     queryParams.push(`${options.name}`);
-
     queryText += `, name = $${queryParams.length}`;
   }
 
   if (options.type) {
-
     queryParams.push(`${options.type}`);
-
     queryText += `, type = $${queryParams.length}`;
   }
 
   if (options.breed) {
-
     queryParams.push(`${options.breed}`);
-
     queryText += `, breed = $${queryParams.length}`;
   }
 
@@ -43,10 +37,7 @@ const edit = function(user_id, pet_id, options) {
   }
 
   if (options.colour) {
-
     queryParams.push(`${options.colour}`);
-
-
     queryText += `, colour = $${queryParams.length}`;
   }
 

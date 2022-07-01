@@ -13,12 +13,20 @@ const search = function(user_id, options) {
     userId = user_id;
   }
 
+
   let queryParams = [userId];
   let queryText = `
   SELECT listings.*, users.username FROM listings
   JOIN users
-  ON users.id = listings.breeder_id
-  WHERE breeder_id != $1
+  ON users.id = listings.breeder_id`
+
+  if (options.favourites === 'on') {
+    queryText += ` JOIN favourites
+    ON listings.id = favorites.listings_id
+    WHERE favorites.users_id = $1`
+  }
+
+  queryText += `AND breeder_id != $1
   AND is_sold IS NOT true `;
 
   if (options.type) {
@@ -88,4 +96,10 @@ const 1 = function(user_id) {
 
 exports
 
+*/
+
+/*
+  JOIN favourites
+  ON listings.id = favorites.listings_id
+  WHERE favorites.users_id = $1
 */
