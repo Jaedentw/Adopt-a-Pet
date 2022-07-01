@@ -7,23 +7,6 @@ const pool = new Pool({
   database: 'midterm'
 });
 
-//user profile information
-const getUserProfile = function(user_id) {
-  const sql = `
-  SELECT name, last_name, username, email, country, city, bio FROM users
-  WHERE id = $1;`;
-  return pool
-  .query (sql, user_id)
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
-};
-
-exports.getUserProfile = getUserProfile;
-
 //All of a breeder's active listings
 const userListings = function(breeder_id) {
   const sql = `
@@ -44,12 +27,10 @@ const userListings = function(breeder_id) {
 
 exports.userListings = userListings;
 
-//All of a breeders sold listings and their owners
-const soldAndOwner = function(breeder_id) {
+//All of a breeders sold listings
+const soldListings = function(breeder_id) {
   const sql = `
-  SELECT users.*, listings.* FROM listings
-  JOIN users
-  ON users.id = listings.owner_id
+  SELECT listings.* FROM listings
   WHERE breeder_id = $1 AND is_sold = true
   ORDER BY date_sold DESC;`;
   return pool
@@ -62,7 +43,7 @@ const soldAndOwner = function(breeder_id) {
   })
 };
 
-exports.soldAndOwner = soldAndOwner;
+exports.soldListings = soldListings;
 
 //featured page of listings, same country and city
 //breeder_id IS NOT user_id --> to make sure we're not featuring the animals this user may be selling
@@ -70,7 +51,7 @@ const featuredForUser = function(user_id) {
   const sql = `
   SELECT listings.*, users.username FROM listings
   JOIN users
-  ON users.id = listings.owner_id
+  ON users.id = listings.breeder_id
   WHERE breeder_id IS NOT $1
   AND is_sold IS NOT true`;
   return pool
@@ -90,7 +71,7 @@ const usersFavourites = function(user_id) {
   const sql = `
   SELECT listings.*, users.username FROM listings
   JOIN users
-  ON users.id = listings.owner_id
+  ON users.id = listings.breeder_id
   JOIN favourites
   ON listings.id = favorites.listings_id
   WHERE favorites.users_id = $1
@@ -107,28 +88,6 @@ const usersFavourites = function(user_id) {
 };
 
 exports.usersFavourites = usersFavourites;
-
-//shows user favourites
-const soldFavourites = function(user_id) {
-  const sql = `
-  SELECT listings.*, users.username FROM listings
-  JOIN users
-  ON users.id = listings.owner_id
-  JOIN favourites
-  ON listings.id = favorites.listings_id
-  WHERE favorites.users_id = $1
-  AND is_sold IS true;`;
-  return pool
-  .query (sql, user_id)
-  .then ((result) => {
-    return result.rows;
-  })
-  .catch ((error) => {
-    console.log(error.message);
-  })
-};
-
-exports.soldFavourites = soldFavourites;
 
 //utility queries
 
@@ -186,7 +145,7 @@ const removeListing = function(user_id, listing_id) {
 
 exports.removeListing = removeListing;
 
-
+//all listings
 const getAllListings = function() {
   const sql = `SELECT * FROM listings;`;
   return pool
