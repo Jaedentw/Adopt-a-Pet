@@ -12,7 +12,7 @@
           <%// output pet object data after each lable  %>
           <p>Current Name: <%-listings[pets].name%> </p>
 
-          <p>Breeder: <%- listings[pets].id %></p>
+          <p>Breeder: <%- %> </p>
 
         </span>
 
@@ -57,13 +57,21 @@
     </span>
 
     <% if (user){ %>
+      <span class="popup">
+        <div class="popup-content">
+          <form class="sms" method="POST" action="/sms">
+          <input name="text" id="text-box" type="text" placeholder="send message">
+          <button type="submit" id="button-send">send</button>
+        </form>
+          <button class="close">x</button>
+        </div>
+      </span>
+
     <span>
       <form action="/savedPet/<%=user.id%>" method="POST">
         <input type="hidden" name="listing_id" value="<%=listings[pets].id%>"/>
         <button type="submit">Save</button>
-        </form>
-
-
+      </form>
     </span>
     <% } %>
 

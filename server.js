@@ -254,3 +254,22 @@ app.post("/create", (req, res) => {
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
+
+//---------------------------------------------------
+// TWILIO SEND A SMS
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = require('twilio')(accountSid, authToken);
+
+app.post('/sms', (req, res) => {
+  client.messages
+  .create({
+     body: req.body.text,
+     from: '+18597626484',
+     to: '+1 2893398683'
+   })
+  .then(message => {
+    console.log(message.sid);
+    res.redirect('/')
+  });
+})
