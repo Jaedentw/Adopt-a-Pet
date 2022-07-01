@@ -89,8 +89,8 @@ const usersFavourites = function(user_id) {
   JOIN users
   ON users.id = listings.breeder_id
   JOIN favourites
-  ON listings.id = favorites.listings_id
-  WHERE favorites.users_id = $1;`;
+  ON listings.id = favourites.listings_id
+  WHERE favourites.users_id = $1;`;
   return pool
     .query(sql, [user_id])
     .then((result) => {

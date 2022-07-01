@@ -22,12 +22,14 @@ const search = function(user_id, options) {
 
   if (options.favourites === 'on') {
     queryText += ` JOIN favourites
-    ON listings.id = favorites.listings_id
-    WHERE favorites.users_id = $1`
+    ON listings.id = favourites.listings_id
+    WHERE favourites.users_id = $1`
   }
 
-  queryText += `AND breeder_id != $1
+  queryText += ` AND breeder_id != $1
   AND is_sold IS NOT true `;
+
+  console.log(queryText);
 
   if (options.type) {
     queryParams.push(`%${options.type}%`);
