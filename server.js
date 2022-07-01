@@ -1,10 +1,10 @@
 // load .env data into process.env
 require("dotenv").config();
-const database = require('./database');
-const filter_db = require('./Queries/search_filters.js');
-const listings = require('./Queries/Jays_Queries.js');
-const editing = require('./Queries/editing_query');
-const createPet = require('./Queries/create_pet');
+const database = require('.Queries/user_queries.js');
+const filter_db = require('./Queries/search_filters.js.js');
+const listings = require('./Queries/jays_queries.js');
+const editing = require('./Queries/editing_query.js');
+const createPet = require('./Queries/create_pet.js');
 
 // Web server config
 const PORT = process.env.PORT || 8080;
@@ -68,16 +68,13 @@ app.use("/api/users", usersRoutes(db));
 // functions
 
 
-
+//login
 app.get('/login/:id', (req, res) => {
-
-      req.session.userId = req.params.id;
-      res.redirect("/");
-
-
+  req.session.userId = req.params.id;
+  res.redirect("/");
 });
 
-
+//featured/search page
 app.get("/", (req, res) => {
   const id = req.session.userId;
   const user = database.getUserWihId(id)
@@ -87,9 +84,9 @@ app.get("/", (req, res) => {
   .then( ([user,listings]) => {
     res.render("featured",{user,listings});
   })
-
 });
 
+//featured/search page post
 app.post("/", (req, res) => {
   let options = {
     country: req.body.country,
@@ -114,10 +111,9 @@ app.post("/", (req, res) => {
   .then( ([user,listings]) => {
     res.render("featured",{user,listings});
   })
-
 });
 
-
+//?
 app.post("/savedPet/:id", (req, res) =>{
   const id = req.session.userId;
   const user = database.getUserWihId(id)
@@ -125,7 +121,7 @@ app.post("/savedPet/:id", (req, res) =>{
 
   return Promise.all([user,listings_promise])
   .then( ([user,listings]) => {
-    res.render("index",{user,listings});
+    res.render("featured",{user,listings});
   });
 });
 
@@ -133,17 +129,8 @@ app.post("/savedPet/:id", (req, res) =>{
 
 // Post to logout
 app.get('/logout/:id', (req, res) => {
-
   req.session.userId = null;
   res.redirect("/");
-
-
-});
-
-//get sold pets
-app.get("/sold-pets", (req, res) => {
-  const templateVars = {userID: req.session.userId, user: user};
-  res.render("sold", templateVars);
 });
 
 //listed pets
@@ -157,23 +144,20 @@ app.get("/listed-pets", (req, res) => {
   })
 })
 
+//search post from listd-pets
 app.post("/listed-pets" , (req, res) => {
   const id = req.session.userId;
   const listing_id = req.body.listingId;
-  console.log('This is the pet ID: ',listing_id);
   const user = database.getUserWihId(id);
   const pet = listings.listingById(listing_id);
   return Promise.all([user,pet])
   .then ( ([user,listings]) => {
     res.render("edit", {user,listings,listing_id});
-
   });
-
 });
 
-
+//submit edit post
 app.post("/edit", (req, res) => {
-  console.log('Body:',req.body)
   let petChange = {
     name: req.body.pet_name,
     type: req.body.type,
@@ -186,6 +170,7 @@ app.post("/edit", (req, res) => {
     date_sold: req.body.date_sold,
     description: req.body.description
   }
+
   Object.keys(petChange).forEach(key => {
     if (petChange[key] === '') {
       delete petChange[key];
@@ -205,29 +190,24 @@ app.post("/edit", (req, res) => {
   const listing = listings.userListings(id);
   const update = editing.edit(id,listing_id,petChange);
 
-
   return Promise.all([user,update,listing])
   .then ( ([user,update,listings]) => {
     res.redirect("/listed-pets");
-
   });
-
 });
 
-
-
+//create page
 app.get("/create/:id", (req, res) => {
   const id = req.session.userId;
-  console.log('Userid create get: ',id);
   const user = database.getUserWihId(id);
 
   return Promise.all([user])
   .then ( ([user]) => {
     res.render("create",{user})
   });
-
 });
 
+//create button post
 app.post("/create", (req, res) => {
   const id = req.session.userId;
   let addPet = {
@@ -248,7 +228,6 @@ app.post("/create", (req, res) => {
     if (addPet[key] === '') {
       delete addPet[key];
     }
-
     if (addPet.is_sold === 'on'){
       addPet.is_sold = true;
     }
@@ -262,19 +241,9 @@ app.post("/create", (req, res) => {
   .then ( ([addNewPet]) => {
     res.redirect("/")
   });
-
 });
 
-
-
-
-
+//list on port
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
-
-
-
-/*
-TEST FUNCTION
-*/
