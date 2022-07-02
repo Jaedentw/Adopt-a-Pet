@@ -29,7 +29,6 @@ const search = function(user_id, options) {
   queryText += ` AND breeder_id != $1
   AND is_sold IS NOT true `;
 
-  console.log(queryText);
 
   if (options.type) {
     queryParams.push(`%${options.type}%`);

@@ -94,12 +94,13 @@ exports.usersFavourites = usersFavourites;
 //add listing to user favourites list
 const addToFavourites = function(user_id, listings_id) {
   const sql = `
-  INSERT INTO favorites (users_id, listings_id)
+  INSERT INTO favourites (users_id, listings_id)
   VALUES ($1, $2)
   RETURNING *;`;
   return pool
     .query(sql, [user_id, listings_id])
     .then((result) => {
+      console.log('This is row:',result.rows);
       return result.rows;
     })
     .catch((error) => {
@@ -128,13 +129,13 @@ const removeFromFavourites = function(user_id, listing_id) {
 exports.removeFromFavourites = removeFromFavourites;
 
 //take down users active listing
-const removeListing = function(user_id, listing_id) {
+const removeListing = function(listing_id) {
   const sql = `
   DELETE FROM listings
-  WHERE breeder_id = $1 AND id = $2
+  WHERE id = $1
   RETURNING *`;
   return pool
-    .query(sql, [user_id, listing_id])
+    .query(sql, [listing_id])
     .then((result) => {
       return result.rows;
     })

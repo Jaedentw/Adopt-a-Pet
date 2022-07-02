@@ -16,11 +16,21 @@
       <div class="span-title">
         Your Listings
       </div>
-      <form method="GET" action="/create/<%=user%>" class ="listed-buttons">
-        <button type="submit" class="listed-btn hover-shadow">Active Listings</button>
-        <button type="submit" class="listed-btn hover-shadow">Sold Listings</button>
-        <button type="submit" class="listed-btn hover-shadow">Create New Listing</button>
-      </form>
+
+      <div class="listed-buttons">
+        <form method="POST" action="">
+          <button type="submit" class="listed-btn hover-shadow">Active Listings</button>
+        </form>
+
+
+        <form method="POST" action="">
+            <button type="submit" class="listed-btn hover-shadow">Sold Listings</button>
+        </form>
+
+        <form method="GET" action="/create/<%=user%>">
+          <button type="submit" class="listed-btn hover-shadow">Create New Listing</button>
+        </form>
+      <div>
 
       <div class="cards-edits">
         <%- include('partials/myListedPets.ejs') %>

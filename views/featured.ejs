@@ -11,10 +11,13 @@
   <div class="search-params">
     <div class="span-title hover-shadow">What are you looking for?</div>
     <form method="POST" action="/" class="params">
+
+      <% if (user) { %>
       <span class="reg-nb">
         <label>Favourites:</label>
         <input type="checkbox" id="favourites" name="favourites" class="reg-check">
       </span>
+      <% } %>
       <span>
         <label>Country:</label>
         <input type="text" id="country" name="country">

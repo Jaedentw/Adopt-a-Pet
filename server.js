@@ -84,12 +84,13 @@ app.get('/logout/:id', (req, res) => {
 
 //featured page
 app.get("/", (req, res) => {
+  const users = database.getAllUsers();
   const id = req.session.userId;
   const user = database.getUserWithId(id);
   const listings_promise = listings.getAllListings();
-  return Promise.all([user,listings_promise])
-  .then( ([user,listings]) => {
-    res.render("featured",{user,listings});
+  return Promise.all([user,listings_promise,users])
+  .then( ([user,listings,users]) => {
+    res.render("featured",{user,listings,users});
   });
 });
 
@@ -113,6 +114,9 @@ app.get("/create/:id", (req, res) => {
     res.render("create",{user})
   });
 });
+
+
+
 
 //----------------------------------------------
 //Featured Page - POSTs
@@ -158,13 +162,16 @@ app.post("/", (req, res) => {
 //Save pet button - unknown if functional
 app.post("/savedPet/:id", (req, res) =>{
   const id = req.session.userId;
-  const user = database.getUserWithId(id)
-  const listings_promise = listings.getAllListings()
+  const listing_id = req.body.listing_id;
+  console.log('TESTING ROUTING');
+  const addFavPet = listings.addToFavourites(id,listing_id);
 
-  return Promise.all([user,listings_promise])
-  .then( ([user,listings]) => {
-    res.render("featured",{user,listings});
+  return Promise.all([addFavPet])
+  .then ( ([addFavPet]) => {
+    res.redirect('/');
   });
+
+
 });
 
 //Edit button - listed page
@@ -249,6 +256,31 @@ app.post("/create", (req, res) => {
     res.redirect("/")
   });
 });
+
+// Admin DELETE PAGE
+app.post("/deletePet/:id", (req, res) => {
+  const pet_id = req.params.id;
+  const deletePet = listings.removeListing(pet_id)
+
+  return Promise.all([deletePet])
+  .then ( ([deletePet]) => {
+    res.redirect("/")
+  });
+
+});
+
+
+app.post("/deleteUserPet/:id", (req, res) => {
+  const pet_id = req.params.id;
+  const deletePet = listings.removeListing(pet_id)
+
+  return Promise.all([deletePet])
+  .then ( ([deletePet]) => {
+    res.redirect("/listed-pets");
+  });
+
+});
+
 
 //listen on port
 app.listen(PORT, () => {
