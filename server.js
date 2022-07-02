@@ -174,6 +174,29 @@ app.post("/savedPet/:id", (req, res) =>{
 
 });
 
+
+//Sold pet post
+
+app.post ("/checkSold/:id", (req, res) =>{
+  const id = req.session.userId;
+  const check = req.body.check;
+
+  const user = database.getUserWithId(id);
+  const newListings = listings.is_sold_listings(id,check);
+
+  return Promise.all([user,newListings])
+  .then ( ([user,listings]) => {
+    res.render("listed", {user,listings});
+  });
+
+
+
+
+
+
+});
+
+
 //Edit button - listed page
 app.post("/listed-pets" , (req, res) => {
   const id = req.session.userId;

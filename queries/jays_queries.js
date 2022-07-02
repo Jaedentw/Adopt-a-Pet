@@ -27,23 +27,27 @@ const userListings = function(breeder_id) {
 
 exports.userListings = userListings;
 
-//All of a breeders sold listings
-const soldListings = function(breeder_id) {
-  const sql = `
-  SELECT listings.* FROM listings
-  WHERE breeder_id = $1 AND is_sold = true
-  ORDER BY date_sold DESC;`;
+
+const is_sold_listings = function(breeder_id, tf) {
+  let sql =
+  `SELECT users.username, listings.* FROM listings
+  JOIN users
+  ON users.id = listings.breeder_id
+  WHERE breeder_id = $1
+  AND is_sold = $2;`;
+
   return pool
-    .query(sql, [breeder_id])
+    .query(sql, [breeder_id,tf])
     .then((result) => {
+      console.log('query: ',sql);
+      console.log('result.rows: ',result.rows);
       return result.rows;
     })
     .catch((error) => {
       console.log(error.message);
     });
 };
-
-exports.soldListings = soldListings;
+exports.is_sold_listings = is_sold_listings;
 
 //featured page of listings, same country and city
 //breeder_id IS NOT user_id --> to make sure we're not featuring the animals this user may be selling
