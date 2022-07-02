@@ -10,9 +10,9 @@
 
         <span>
           <%// output pet object data after each lable  %>
-          <p>Current Name: <%-listings[pets].name%> </p>
+          <p>Current Name: <%-listings[pets].name%></p>
 
-          <p>Breeder: <%- %> </p>
+          <p>Breeder: <%-listings[pets].breeder_id%></p>
 
         </span>
 
@@ -63,9 +63,15 @@
           <input name="text" id="text-box" type="text" placeholder="send message">
           <button type="submit" id="button-send">send</button>
         </form>
-          <button class="close">x</button>
         </div>
       </span>
+      <% if (user.is_admin){ %>
+      <span>
+      <form action="/deletePet/<%=listings[pets].id%>" method="POST">
+        <button type="submit">Delete</button>
+      </form>
+      </span>
+      <% } %>
 
     <span>
       <form action="/savedPet/<%=user.id%>" method="POST">

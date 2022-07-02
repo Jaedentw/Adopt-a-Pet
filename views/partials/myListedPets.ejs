@@ -55,11 +55,17 @@
       Report
     </span>
 
+    <span>
+      <form action="/deleteUserPet/<%=listings[pets].id%>" method="POST">
+        <button type="submit">Delete</button>
+      </form>
+    </span>
+
 
     <form action="/listed-pets" method="POST">
       <input name="listingId" type="hidden" value="<%=listings[pets].id%>"></input>
       <button type="submit">Edit</button>
-      </form>
+    </form>
 
 
   </div>
