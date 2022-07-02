@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+const { user } = require('pg/lib/defaults');
 
 const pool = new Pool({
   user: 'labber',
@@ -8,20 +9,15 @@ const pool = new Pool({
 });
 
 //All of a breeder's active listings
-const userListings = function(breeder_id, tf) {
+const userListings = function(user_id) {
   const sql = `
   SELECT users.username, listings.* FROM listings
   JOIN users
   ON users.id = listings.breeder_id
   WHERE breeder_id = $1`
 
-  if(tf = true) {
-    sql += `AND is_sold = true`
-  } else {
-    sql += `AND is_sold = false`
-  }
   return pool
-    .query(sql, [breeder_id])
+    .query(sql, [user_id])
     .then((result) => {
       return result.rows;
     })
@@ -30,6 +26,26 @@ const userListings = function(breeder_id, tf) {
     });
 };
 exports.userListings = userListings;
+
+
+//sold unsold user listings
+const is_sold_listings = function(breeder_id, tf) {
+  let sql =
+  `SELECT users.username, listings.* FROM listings
+  JOIN users
+  ON users.id = listings.breeder_id
+  WHERE breeder_id = $1
+  AND is_sold = $2;`;
+  return pool
+  .query(sql, [breeder_id,tf])
+  .then((result) => {
+    return result.rows;
+  })
+  .catch((error) => {
+    console.log(error.message);
+  });
+}
+exports.is_sold_listings = is_sold_listings;
 
 //featured page of listings, same country and city
 //breeder_id IS NOT user_id --> to make sure we're not featuring the animals this user may be selling

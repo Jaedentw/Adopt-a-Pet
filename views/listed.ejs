@@ -18,17 +18,17 @@
       </div>
 
       <div class="listed-buttons">
-
-        <form method="POST" action="">
+        <form method="POST" action="/checkSold/<%=user.id%>">
           <button type="submit" class="listed-btn hover-shadow">Active Listings</button>
+          <input name="check" id="check" type="hidden" value="<%=false%>"></input>
         </form>
-        <form method="POST" action="">
+        <form method="POST" action="/checkSold/<%=user.id%>">
             <button type="submit" class="listed-btn hover-shadow">Sold Listings</button>
+            <input name="check" id="check" type="hidden" value="<%=true%>"></input>
         </form>
         <form method="GET" action="/create/<%=user%>">
           <button type="submit" class="listed-btn hover-shadow">Create New Listing</button>
         </form>
-
       </div>
 
       <div class="cards-edits">
